@@ -1,0 +1,10 @@
+{
+  "serverUrl": "http://127.0.0.1",
+  "isStrict": false,
+  "allInOne": true,
+  "outPath": "D://md4",
+  "coverOld": true,
+  "md5EncryptedHtmlName": false,
+  "projectName": "smart-doc",
+  "skipTransientField": true
+}

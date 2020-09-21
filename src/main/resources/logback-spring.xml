@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <!-- 文件输出格式 -->
+    <property name="PATTERN" value="%yellow(%date{yyyy-MM-dd HH:mm:ss}) |%highlight(%-5level) |%blue(%thread) |%blue(%file:%line) |%green(%logger) |%cyan(%msg%n)" />
+    <!-- test文件路径 -->
+    <property name="TEST_FILE_PATH" value="D:/log" />
+    <!-- pro文件路径 -->
+    <property name="PRO_FILE_PATH" value="/var/log/device" />
+
+    <!-- 开发环境 -->
+    <springProfile name="dev">
+        <!--所有的日志-->
+        <appender name="ROLL_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            　　　　　　<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            　　　　　　　　　<fileNamePattern>${TEST_FILE_PATH}/logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+            　　　　　　　　　<maxHistory>30</maxHistory>
+            　　　　　　</rollingPolicy>
+            　　　　　　<encoder>
+            　　　　　　　　　<pattern>${PATTERN}</pattern>
+            　　　　　　</encoder>
+        </appender>
+        <!--错误日志-->
+        <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            　　　　　　<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            　　　　　　　　　<fileNamePattern>${TEST_FILE_PATH}/error.%d{yyyy-MM-dd}.log</fileNamePattern>
+            　　　　　　　　　<maxHistory>30</maxHistory>
+            　　　　　　</rollingPolicy>
+            　　　　　　<encoder>
+            　　　　　　　　　<pattern>${PATTERN}</pattern>
+            　　　　　　</encoder>
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>ERROR</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+        </appender>
+        <!--控制台打印格式-->
+        <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+            <target>System.out</target>
+            <encoder>
+                <pattern>${PATTERN}</pattern>
+                <charset>utf-8</charset>
+            </encoder>
+        </appender>
+        <!--sql打印-->
+        <appender name="sql" class="ch.qos.logback.core.ConsoleAppender">
+            <target>System.out</target>
+            <encoder>
+                <pattern>%blue(%msg%n)\n</pattern>
+                <charset>utf-8</charset>
+            </encoder>
+        </appender>
+
+        <!--sql日志记录-->
+        <appender name="sqlLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            　　　　　　<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            　　　　　　　　　<fileNamePattern>${TEST_FILE_PATH}/sql.%d{yyyy-MM-dd}.log</fileNamePattern>
+            　　　　　　　　　<maxHistory>30</maxHistory>
+            　　　　　　</rollingPolicy>
+            　　　　　　<encoder>
+            　　　　　　　　　<pattern>${PATTERN}</pattern>
+            　　　　　　</encoder>
+        </appender>
+
+        <logger level="DEBUG" name="com.group.partybuild.mapper" additivity="false">
+            <appender-ref ref="sql"/>
+        </logger>
+
+
+        <root level="DEBUG">
+            <appender-ref ref="ROLL_FILE"/>
+        </root>
+
+        <root level="INFO">
+            <appender-ref ref="ERROR_FILE"/>
+            <appender-ref ref="stdout"/>
+            <appender-ref ref="ROLL_FILE"/>
+        </root>
+    </springProfile>
+    <!-- 生产环境 -->
+    <springProfile name="prod">
+        <!--所有的日志-->
+        <appender name="ROLL_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            　　　　　　<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            　　　　　　　　　<fileNamePattern>${PRO_FILE_PATH}/logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+            　　　　　　　　　<maxHistory>30</maxHistory>
+            　　　　　　</rollingPolicy>
+            　　　　　　<encoder>
+            　　　　　　　　　<pattern>${PATTERN}</pattern>
+            　　　　　　</encoder>
+        </appender>
+        <!--错误日志-->
+        <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            　　　　　　<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            　　　　　　　　　<fileNamePattern>${PRO_FILE_PATH}/error.%d{yyyy-MM-dd}.log</fileNamePattern>
+            　　　　　　　　　<maxHistory>30</maxHistory>
+            　　　　　　</rollingPolicy>
+            　　　　　　<encoder>
+            　　　　　　　　　<pattern>${PATTERN}</pattern>
+            　　　　　　</encoder>
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>ERROR</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+        </appender>
+        <!--控制台打印格式-->
+        <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+            <target>System.out</target>
+            <encoder>
+                <pattern>${PATTERN}</pattern>
+                <charset>utf-8</charset>
+            </encoder>
+        </appender>
+        <!--sql打印-->
+        <appender name="sql" class="ch.qos.logback.core.ConsoleAppender">
+            <target>System.out</target>
+            <encoder>
+                <pattern>%red%highlight(%msg%n)\n</pattern>
+                <charset>utf-8</charset>
+            </encoder>
+        </appender>
+
+        <!--sql日志记录-->
+        <appender name="sqlLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            　　　　　　<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            　　　　　　　　　<fileNamePattern>${PRO_FILE_PATH}/sql.%d{yyyy-MM-dd}.log</fileNamePattern>
+            　　　　　　　　　<maxHistory>30</maxHistory>
+            　　　　　　</rollingPolicy>
+            　　　　　　<encoder>
+            　　　　　　　　　<pattern>${PATTERN}</pattern>
+            　　　　　　</encoder>
+        </appender>
+
+        <logger level="DEBUG" name="com.labproject.sysadmin.dao" additivity="false">
+            <appender-ref ref="sql"/>
+            <appender-ref ref="sqlLog"/>
+        </logger>
+
+
+        <root level="DEBUG">
+            <appender-ref ref="ROLL_FILE"/>
+        </root>
+
+        <root level="INFO">
+            <appender-ref ref="ERROR_FILE"/>
+            <appender-ref ref="stdout"/>
+            <appender-ref ref="ROLL_FILE"/>
+        </root>
+    </springProfile>
+
+</configuration>
