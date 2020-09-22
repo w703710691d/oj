@@ -6,6 +6,7 @@ import com.swustacm.oj.common.util.ListUtils;
 import com.swustacm.oj.config.shiro.JwtUtil;
 import com.swustacm.oj.entity.User;
 import com.swustacm.oj.service.UserService;
+import jodd.util.BCrypt;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *  用户登录操作类
+ * 用户登录操作类
+ *
  * @author xingzi
  */
 @Slf4j
@@ -29,23 +31,26 @@ public class UserController {
     UserService userService;
     @Autowired
     Environment environment;
+
     /**
      * 用户登录
+     *
      * @param user 用户名和密码 name & password
      * @return
      */
     @PostMapping("/login")
-    public CommonResult<User> login(@RequestBody @Validated  User user){
-        log.info("username:{},password:{}",user.getName(),user.getPassword());
-        if(ListUtils.exist(environment.getActiveProfiles(),"dev")) {
-            user.setPassword("$2a$10$AMxkUgVLhm8JD.esSr9vi./Inwy9m8wpa/9eKcZlT4lslVALcha/C");
+    public CommonResult<User> login(@RequestBody @Validated User user) {
+        log.info("username:{},password:{}", user.getName(), user.getPassword());
+        if (ListUtils.exist(environment.getActiveProfiles(), "dev")) {
+            user.setPassword("li112411");
             user.setName("7220190127");
         }
-       User userInfo = userService.getOne(new QueryWrapper<User>().eq("name",user.getName()));
-        if(userInfo==null){
+        User userInfo = userService.getOne(new QueryWrapper<User>().eq("name", user.getName()));
+        if (userInfo == null) {
             return CommonResult.error("用户不存在");
         }
-        if(!user.getPassword().equals(userInfo.getPassword())){
+
+        if (! BCrypt.checkpw(user.getPassword(),userInfo.getPassword())) {
             return CommonResult.error("密码错误");
         }
         JwtUtil jwtUtil = new JwtUtil();
@@ -58,7 +63,7 @@ public class UserController {
     }
 
     @GetMapping("/getUserInfo")
-    public CommonResult<Object> getUserInfo(){
-        return CommonResult.ok(  SecurityUtils.getSubject().getPrincipal());
+    public CommonResult<Object> getUserInfo() {
+        return CommonResult.ok(SecurityUtils.getSubject().getPrincipal());
     }
 }

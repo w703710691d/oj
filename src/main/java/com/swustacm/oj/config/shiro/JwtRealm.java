@@ -77,7 +77,6 @@ public class JwtRealm extends AuthorizingRealm {
         if (!jwtUtil.isVerify(jwt)) {
             throw new UnknownAccountException();
         }
-        //下面是验证这个user是否是真实存在的
         //判断数据库中username是否存在
         String username = (String) jwtUtil.decode(jwt).get("username");
         log.info("在使用token登录" + username);

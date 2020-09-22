@@ -33,4 +33,7 @@ WHERE
 GROUP BY
 	u.`name`
     </select>
+    <select id="getScoreByTime" parameterType="String"  resultType="java.util.Map">
+		${sql}
+	</select>
 </mapper>
