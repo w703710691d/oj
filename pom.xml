@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -9,11 +9,11 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.swustacm</groupId>
-    <artifactId>oj</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>poweroj</artifactId>
+    <version>3.0.0</version>
     <packaging>war</packaging>
-    <name>swustoj</name>
-    <description>Demo project for Spring Boot</description>
+    <name>PowerOJ</name>
+    <description>PowerOJ is a online judge for ACM/ICPC or OI</description>
 
     <properties>
         <java.version>8</java.version>
@@ -148,7 +148,7 @@
 
     <build>
         <!--设置最终打包名称-->
-        <finalName>ROOT</finalName>
+        <finalName>oj</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
