@@ -62,7 +62,7 @@
             　　　　　　</encoder>
         </appender>
 
-        <logger level="DEBUG" name="com.swustacm.oj.mapper" additivity="false">
+        <logger level="DEBUG" name="com.swustacm.poweroj.mapper" additivity="false">
             <appender-ref ref="sql"/>
         </logger>
 
