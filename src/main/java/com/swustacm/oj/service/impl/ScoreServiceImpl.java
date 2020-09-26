@@ -3,6 +3,7 @@ package com.swustacm.oj.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.swustacm.oj.common.util.DateConvert;
+import com.swustacm.oj.common.util.ListUtils;
 import com.swustacm.oj.entity.Contest;
 import com.swustacm.oj.entity.ExperienceScore;
 import com.swustacm.oj.mapper.ContestMapper;
@@ -65,11 +66,12 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper, ExperienceScore> 
             FROM(" score as s ");
             LEFT_OUTER_JOIN("user as u on u.uid = s.uid");
             LEFT_OUTER_JOIN("cprogram_user_info as c ON c.uid = s.uid");
-            WHERE("s.cid in(" + cidStr + ")");
+            if(!ListUtils.isEmpty(cids)) {
+                WHERE("s.cid in(" + cidStr + ")");
+            }
             WHERE("s.ctime between " + start + " and " + end);
             GROUP_BY("u.`name`");
         }}.toString();
-        System.out.println(sql);
         return scoreMapper.getScoreByTime(sql);
     }
 

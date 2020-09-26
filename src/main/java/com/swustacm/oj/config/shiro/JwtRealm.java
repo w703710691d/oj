@@ -31,6 +31,8 @@ public class JwtRealm extends AuthorizingRealm {
     Environment environment;
     @Autowired
     UserService userService;
+
+    public static final String  TOKEN_DEV  = "12345";
     /*
      * 多重写一个support
      * 标识这个Realm是专门用来验证JwtToken
@@ -68,18 +70,25 @@ public class JwtRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 
-        String jwt = (String) token.getPrincipal();
-        if (jwt == null) {
-            throw new NullPointerException("jwtToken 不允许为空");
+        String jwt;
+        if (ListUtils.exist(environment.getActiveProfiles(), "dev")) {
+           jwt = TOKEN_DEV;
         }
-        //判断
-        JwtUtil jwtUtil = new JwtUtil();
-        if (!jwtUtil.isVerify(jwt)) {
-            throw new UnknownAccountException();
+        else {
+            jwt = (String) token.getPrincipal();
+            if (jwt == null) {
+                throw new NullPointerException("jwtToken 不允许为空");
+            }
+            //判断
+            JwtUtil jwtUtil = new JwtUtil();
+            if (!jwtUtil.isVerify(jwt)) {
+                throw new UnknownAccountException();
+            }
+            //判断数据库中username是否存在
+            String username = (String) jwtUtil.decode(jwt).get("username");
+            log.info("在使用token登录" + username);
         }
-        //判断数据库中username是否存在
-        String username = (String) jwtUtil.decode(jwt).get("username");
-        log.info("在使用token登录" + username);
+
         return new SimpleAuthenticationInfo(jwt, jwt, "JwtRealm");
     }
 }

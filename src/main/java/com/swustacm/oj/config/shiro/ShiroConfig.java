@@ -62,8 +62,6 @@ public class ShiroConfig {
     public ShiroFilterFactoryBean shiroFilterFactoryBean() {
         ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
         shiroFilter.setSecurityManager(securityManager());
-        shiroFilter.setLoginUrl("/unauthenticated");
-        shiroFilter.setUnauthorizedUrl("/unauthorized");
         /*
          * c. 添加jwt过滤器，并在下面注册
          * 也就是将jwtFilter注册到shiro的Filter中
@@ -73,7 +71,6 @@ public class ShiroConfig {
         //这个地方其实另外两个filter可以不设置，默认就是
         filterMap.put("jwt", new JwtFilter());
         shiroFilter.setFilters(filterMap);
-
         // 拦截器
         Map<String, String> filterRuleMap = new LinkedHashMap<>();
         filterRuleMap.put("/dev/user/captcha", "anon");

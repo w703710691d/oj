@@ -2,6 +2,7 @@ package com.swustacm.oj.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.swustacm.oj.common.CommonResult;
+import com.swustacm.oj.common.GlobalConstant;
 import com.swustacm.oj.common.util.ListUtils;
 import com.swustacm.oj.config.shiro.JwtUtil;
 import com.swustacm.oj.entity.User;
@@ -56,7 +57,7 @@ public class UserController {
         JwtUtil jwtUtil = new JwtUtil();
         Map<String, Object> chaim = new HashMap<>(4);
         chaim.put("username", user.getName());
-        String jwtToken = jwtUtil.encode(user.getName(), 5 * 60 * 1000, chaim);
+        String jwtToken = jwtUtil.encode(user.getName(), GlobalConstant.TOKEN_EXP, chaim);
         userInfo.setToken(jwtToken);
         userInfo.setPassword(null);
         return CommonResult.ok(userInfo);
