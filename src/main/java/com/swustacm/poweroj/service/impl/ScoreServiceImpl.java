@@ -4,6 +4,7 @@ package com.swustacm.poweroj.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
 
+import com.swustacm.poweroj.biz.ScoreBiz;
 import com.swustacm.poweroj.common.util.DateConvert;
 import com.swustacm.poweroj.common.util.ListUtils;
 import com.swustacm.poweroj.entity.Contest;
@@ -47,34 +48,6 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper, ExperienceScore> 
     @Override
     public List<ExperienceScore> getScore(Integer num_1, Integer num_2, Integer num_3, Integer num_4, Integer num_5, Integer num_6, Integer num_7, Integer num_8) {
         return scoreMapper.getScore(num_1, num_2, num_3, num_4, num_5, num_6, num_7, num_8);
-    }
-
-    @Override
-    public List<Map<String,Object>>  getScoreByTime(String startTime, String endTime) {
-
-        Long start = DateConvert.coverTimeToLong(startTime, DateConvert.YEAR_DATE_TIME);
-        Long end = DateConvert.coverTimeToLong(endTime, DateConvert.YEAR_DATE_TIME);
-        //获取该时间段所有的Cid
-        List<String> cids = contestMapper.getExperimentCid(start,end);
-        String cidStr = StringUtils.join(cids.toArray(), ",");
-        //sql构建
-        String sql = new SQL() {{
-            SELECT("classes", "`name`", "realName");
-            for (int i = 0; i < cids.size(); i++) {
-                SELECT("max(case s.cid WHEN " + cids.get(i) + " THEN score1 end) ac" + (i+1),
-                        "max(case s.cid WHEN " + cids.get(i) + " THEN score2 end) rep" + (i+1));
-            }
-            SELECT();
-            FROM(" score as s ");
-            LEFT_OUTER_JOIN("user as u on u.uid = s.uid");
-            LEFT_OUTER_JOIN("cprogram_user_info as c ON c.uid = s.uid");
-            if(!ListUtils.isEmpty(cids)) {
-                WHERE("s.cid in(" + cidStr + ")");
-            }
-            WHERE("s.ctime between " + start + " and " + end);
-            GROUP_BY("u.`name`");
-        }}.toString();
-        return scoreMapper.getScoreByTime(sql);
     }
 
 }

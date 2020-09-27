@@ -1,6 +1,7 @@
 package com.swustacm.poweroj.controller;
 
 
+import com.swustacm.poweroj.biz.ScoreBiz;
 import com.swustacm.poweroj.common.CommonResult;
 import com.swustacm.poweroj.entity.ExperienceScore;
 import com.swustacm.poweroj.service.ScoreService;
@@ -23,6 +24,8 @@ import java.util.Map;
 @Validated
 public class ScoreController {
 
+    @Autowired
+    ScoreBiz scoreBiz;
     @Autowired
     ScoreService scoreService;
 
@@ -90,8 +93,7 @@ public class ScoreController {
     @GetMapping("/getScoreByTime")
     public CommonResult<List<Map<String,Object>>> getScoreByTime(@RequestParam @NotEmpty(message = "学期开始时间不能为空") String startTime,
                                                                  @NotEmpty(message = "学期结束时间不能为空")@RequestParam String endTime){
-        List<Map<String,Object>> experienceScores = scoreService.getScoreByTime(startTime,endTime);
-        return CommonResult.ok(experienceScores);
+        return  scoreBiz.getScoreTime(startTime,endTime);
     }
 
 }

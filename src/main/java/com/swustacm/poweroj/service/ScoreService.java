@@ -20,5 +20,4 @@ public interface ScoreService extends IService<ExperienceScore> {
 
     List<ExperienceScore> getScore(Integer num_1, Integer num_2, Integer num_3, Integer num_4, Integer num_5, Integer num_6, Integer num_7, Integer num_8);
 
-    List<Map<String,Object>>  getScoreByTime(String startTime, String endTime);
 }

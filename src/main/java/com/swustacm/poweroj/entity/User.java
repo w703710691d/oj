@@ -5,6 +5,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.sql.Blob;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Date;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -24,19 +27,17 @@ import javax.validation.constraints.NotEmpty;
 @Accessors(chain = true)
 public class User implements Serializable {
 
-    private static final long serialVersionUID=1L;
-
     /**
      * Unique user ID, internal use.
      */
     @TableId(value = "uid", type = IdType.AUTO)
-    private Integer uid;
+    private int uid;
 
     /**
      * refere team id.
      */
     @TableField("tid")
-    private Integer tid;
+    private int tid;
 
     /**
      * unique user login name.
@@ -174,6 +175,10 @@ public class User implements Serializable {
 
     @TableField("token")
     private String token;
+    private Long data1;
+    private Date data2;
+    private LocalDateTime data3;
+
 
 
 }
