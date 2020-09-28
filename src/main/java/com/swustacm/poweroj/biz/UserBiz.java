@@ -3,7 +3,7 @@ package com.swustacm.poweroj.biz;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.swustacm.poweroj.common.CommonResult;
 import com.swustacm.poweroj.common.GlobalConstant;
-import com.swustacm.poweroj.common.util.ListUtils;
+import com.swustacm.poweroj.common.util.CollectionUtils;
 import com.swustacm.poweroj.config.shiro.JwtUtil;
 import com.swustacm.poweroj.entity.User;
 import com.swustacm.poweroj.service.UserService;
@@ -30,7 +30,7 @@ public class UserBiz {
 
     public CommonResult<User> login(User user) {
         log.info("username:{},password:{}", user.getName(), user.getPassword());
-        if (ListUtils.exist(environment.getActiveProfiles(), "dev")) {
+        if (CollectionUtils.exist(environment.getActiveProfiles(), "dev")) {
             user.setPassword("li112411");
             user.setName("7220190127");
         }

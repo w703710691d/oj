@@ -12,7 +12,6 @@ import org.springframework.beans.TypeMismatchException;
 
 import java.io.*;
 import java.lang.reflect.Field;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -151,50 +150,6 @@ public class ExcelUtils<T> {
     }
 
     /**
-     * 将单元格内容转换为字符串
-     *
-     * @param cell 表格内容
-     * @return
-     */
-    private static String convertCellValueToString(Cell cell) {
-        if (cell == null) {
-            return null;
-        }
-        String returnValue = null;
-        switch (cell.getCellType()) {
-            //数字
-            case NUMERIC:
-                Double doubleValue = cell.getNumericCellValue();
-                // 格式化科学计数法，取一位整数
-                DecimalFormat df = new DecimalFormat("0");
-                returnValue = df.format(doubleValue);
-                break;
-            //字符串
-            case STRING:
-                returnValue = cell.getStringCellValue();
-                break;
-            //布尔
-            case BOOLEAN:
-                boolean booleanValue = cell.getBooleanCellValue();
-                returnValue = Boolean.toString(booleanValue);
-                break;
-            // 空值
-            case BLANK:
-                break;
-            // 公式
-            case FORMULA:
-                returnValue = cell.getCellFormula();
-                break;
-            // 故障
-            case ERROR:
-                break;
-            default:
-                break;
-        }
-        return returnValue;
-    }
-
-    /**
      * 提取每一行中需要的数据，构造成为一个结果数据对象
      * <p>
      * 当该行中有单元格的数据为空或不合法时，忽略该行的数据
@@ -256,7 +211,7 @@ public class ExcelUtils<T> {
      */
     private static Sheet buildDataSheet(Workbook workbook,List<String> header) {
         Sheet sheet = workbook.createSheet();
-        if(ListUtils.isEmpty(header)){
+        if(CollectionUtils.isEmpty(header)){
             throw new NullPointerException("Excel第一行数据不能为null");
         }
         // 设置列头宽度

@@ -7,7 +7,7 @@ import java.util.List;
  * List相关工具类
  * @author xingzi
  */
-public class ListUtils<T> {
+public class CollectionUtils<T> {
     /**
      * 判断name 是否在names中
      *

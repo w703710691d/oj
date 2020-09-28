@@ -1,7 +1,7 @@
 package com.swustacm.poweroj.config.shiro;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.swustacm.poweroj.common.util.ListUtils;
+import com.swustacm.poweroj.common.util.CollectionUtils;
 import com.swustacm.poweroj.entity.User;
 import com.swustacm.poweroj.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -49,7 +48,7 @@ public class JwtRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         //获取当前登录用户
         String userId;
-        if(ListUtils.exist(environment.getActiveProfiles(),"dev")) {
+        if(CollectionUtils.exist(environment.getActiveProfiles(),"dev")) {
             userId = "7220190127";
         }
         else {
@@ -71,7 +70,7 @@ public class JwtRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 
         String jwt;
-        if (ListUtils.exist(environment.getActiveProfiles(), "dev")) {
+        if (CollectionUtils.exist(environment.getActiveProfiles(), "dev")) {
            jwt = TOKEN_DEV;
         }
         else {

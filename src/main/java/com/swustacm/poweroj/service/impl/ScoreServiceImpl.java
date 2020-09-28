@@ -1,33 +1,15 @@
 package com.swustacm.poweroj.service.impl;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-
-
-import com.swustacm.poweroj.biz.ScoreBiz;
-import com.swustacm.poweroj.common.util.DateConvert;
-import com.swustacm.poweroj.common.util.ListUtils;
-import com.swustacm.poweroj.entity.Contest;
 import com.swustacm.poweroj.entity.ExperienceScore;
 import com.swustacm.poweroj.mapper.ContestMapper;
 import com.swustacm.poweroj.mapper.ScoreMapper;
-import com.swustacm.poweroj.service.ContestService;
 import com.swustacm.poweroj.service.ScoreService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.ibatis.jdbc.SQL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * <p>
