@@ -157,6 +157,13 @@
             <version>4.0.1</version>
         </dependency>
 
+        <!-- fastDFS-->
+        <dependency>
+            <groupId>cn.aghost</groupId>
+            <artifactId>fastdfs-client-java</artifactId>
+            <version>1.29.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
