@@ -17,4 +17,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
+    @Override
+    public User updateLogin(User user,String ip) {
+        user.setLoginTime((int)(System.currentTimeMillis()/1000));
+        if(ip != null)
+            user.setLoginIP(ip);
+        this.updateById(user);
+        user = this.getById(user.getUid());
+        return user;
+    }
 }

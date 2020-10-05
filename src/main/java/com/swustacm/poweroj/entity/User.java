@@ -175,9 +175,9 @@ public class User implements Serializable {
 
     @TableField("token")
     private String token;
-    private Long data1;
-    private Date data2;
-    private LocalDateTime data3;
+//    private Long data1;
+//    private Date data2;
+//    private LocalDateTime data3;
 
 
 

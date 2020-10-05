@@ -73,7 +73,7 @@ public class ShiroConfig {
         shiroFilter.setFilters(filterMap);
         // 拦截器
         Map<String, String> filterRuleMap = new LinkedHashMap<>();
-        filterRuleMap.put("/dev/user/captcha", "anon");
+        filterRuleMap.put("/captcha/get", "anon");
         filterRuleMap.put("/dev/user/login", "anon");
         filterRuleMap.put("/**",  "jwt");
         shiroFilter.setFilterChainDefinitionMap(filterRuleMap);
