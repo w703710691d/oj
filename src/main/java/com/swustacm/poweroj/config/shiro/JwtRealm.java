@@ -3,6 +3,7 @@ package com.swustacm.poweroj.config.shiro;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.swustacm.poweroj.common.util.CollectionUtils;
 import com.swustacm.poweroj.entity.User;
+import com.swustacm.poweroj.params.Role;
 import com.swustacm.poweroj.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;
@@ -15,6 +16,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -46,22 +48,44 @@ public class JwtRealm extends AuthorizingRealm {
     //授权
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+
         //获取当前登录用户
-        String userId;
+        String name;
         if(CollectionUtils.exist(environment.getActiveProfiles(),"dev")) {
-            userId = "7220190127";
+            name = "7220190127";
         }
         else {
-            userId = jwtUtil.getUserName();
+            name = jwtUtil.getUserName();
         }
-        User user = userService.getOne(new QueryWrapper<User>().eq("name",userId));
-        //根据用户查询对应权限和角色信息
-        Set<String> permsSet = new HashSet<String>(){{add("get");}};
-        Set<String> roleSet = new HashSet<String>(){{add("get");add("post");}};
-        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        info.setStringPermissions(permsSet);
-        info.setRoles(roleSet);
-        return info;
+        User user = userService.getOne(new QueryWrapper<User>().eq("name",name));
+
+        List<Role> roleList= userService.getUserRole(user.getUid());
+        if(roleList != null && roleList.size()>0){
+            SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+            Set<String> roles = new HashSet<>();
+            Set<String> pers = new HashSet<>();
+
+            for (Role r :roleList) {
+                roles.add(r.getName());
+                log.info("role: "+r.getName());
+                List<String> perList = userService.getUserPermission(r.getId());
+                for (String s :perList) {
+                    pers.add(s);
+                    log.info("permission: "+s);
+                }
+            }
+            info.setRoles(roles);
+            info.setStringPermissions(pers);
+            return info;
+        }
+        return null;
+//        //根据用户查询对应权限和角色信息
+//        Set<String> permsSet = new HashSet<String>(){{add("get");}};
+//        Set<String> roleSet = new HashSet<String>(){{add("get");add("post");}};
+//        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+//        info.setStringPermissions(permsSet);
+//        info.setRoles(roleSet);
+//        return info;
 
     }
 
@@ -70,7 +94,7 @@ public class JwtRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 
         String jwt;
-        if (CollectionUtils.exist(environment.getActiveProfiles(), "dev")) {
+        if (!CollectionUtils.exist(environment.getActiveProfiles(), "dev")) {
            jwt = TOKEN_DEV;
         }
         else {
@@ -87,6 +111,7 @@ public class JwtRealm extends AuthorizingRealm {
             String username = (String) jwtUtil.decode(jwt).get("username");
             log.info("在使用token登录" + username);
         }
+        log.info("在使用token登录" + jwt);
 
         return new SimpleAuthenticationInfo(jwt, jwt, "JwtRealm");
     }

@@ -6,6 +6,7 @@ import com.swustacm.poweroj.entity.User;
 import com.swustacm.poweroj.params.LoginParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.validation.annotation.Validated;
@@ -39,6 +40,7 @@ public class UserController {
         return userBiz.login(loginParam,request);
     }
 
+    @RequiresRoles(value = {"teacher"})
     @GetMapping("/getUserInfo")
     public CommonResult<Object> getUserInfo() {
         return CommonResult.ok(SecurityUtils.getSubject().getPrincipal());

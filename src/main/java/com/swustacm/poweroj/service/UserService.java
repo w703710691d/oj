@@ -2,6 +2,10 @@ package com.swustacm.poweroj.service;
 
 import com.swustacm.poweroj.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.swustacm.poweroj.params.Role;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -14,4 +18,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface UserService extends IService<User> {
 
     User updateLogin(User user,String ip);
+
+    List<Role> getUserRole(int uid);
+
+    List<String> getUserPermission(int id);
 }

@@ -40,5 +40,19 @@
         <result column="data" property="data" />
         <result column="token" property="token" />
     </resultMap>
+    <select id="getUserRole" resultType="com.swustacm.poweroj.params.Role">
+        SELECT
+        r.name as name ,
+        r.id as id
+        FROM role r LEFT JOIN user_role ur ON ur.rid = r.id
+        WHERE ur.uid = #{uid}
+    </select>
+    <select id="getUserPermission" resultType="java.lang.String">
+        SELECT
+        p.name as permission
+        FROM permission p inner JOIN role_permission rp ON rp.pid = p.id
+        WHERE
+        rp.rid = #{id}
+    </select>
 
 </mapper>
