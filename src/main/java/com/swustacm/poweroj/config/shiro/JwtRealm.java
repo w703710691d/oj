@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.cache.Cache;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,8 @@ public class JwtRealm extends AuthorizingRealm {
     @Autowired
     UserService userService;
 
-    public static final String  TOKEN_DEV  = "12345";
+    public static final String TOKEN_DEV = "12345";
+
     /*
      * 多重写一个support
      * 标识这个Realm是专门用来验证JwtToken
@@ -51,27 +53,26 @@ public class JwtRealm extends AuthorizingRealm {
 
         //获取当前登录用户
         String name;
-        if(CollectionUtils.exist(environment.getActiveProfiles(),"dev")) {
+        if (CollectionUtils.exist(environment.getActiveProfiles(), "dev")) {
             name = "7220190127";
-        }
-        else {
+        } else {
             name = jwtUtil.getUserName();
         }
-        User user = userService.getOne(new QueryWrapper<User>().eq("name",name));
+        User user = userService.getOne(new QueryWrapper<User>().eq("name", name));
 
-        List<Role> roleList= userService.getUserRole(user.getUid());
-        if(roleList != null && roleList.size()>0){
+        List<Role> roleList = userService.getUserRole(user.getUid());
+        if (roleList != null && roleList.size() > 0) {
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
             Set<String> roles = new HashSet<>();
             Set<String> pers = new HashSet<>();
 
-            for (Role r :roleList) {
+            for (Role r : roleList) {
                 roles.add(r.getName());
-                log.info("role: "+r.getName());
+                log.info("role: " + r.getName());
                 List<String> perList = userService.getUserPermission(r.getId());
-                for (String s :perList) {
+                for (String s : perList) {
                     pers.add(s);
-                    log.info("permission: "+s);
+                    log.info("permission: " + s);
                 }
             }
             info.setRoles(roles);
@@ -95,9 +96,8 @@ public class JwtRealm extends AuthorizingRealm {
 
         String jwt;
         if (!CollectionUtils.exist(environment.getActiveProfiles(), "dev")) {
-           jwt = TOKEN_DEV;
-        }
-        else {
+            jwt = TOKEN_DEV;
+        } else {
             jwt = (String) token.getPrincipal();
             if (jwt == null) {
                 throw new NullPointerException("jwtToken 不允许为空");
@@ -114,5 +114,17 @@ public class JwtRealm extends AuthorizingRealm {
         log.info("在使用token登录" + jwt);
 
         return new SimpleAuthenticationInfo(jwt, jwt, "JwtRealm");
+    }
+    /**
+     * 清除所有用户授权信息缓存.
+     */
+    public void clearAllCachedAuthorizationInfo() {
+        Cache<Object, AuthorizationInfo> cache = getAuthorizationCache();
+        if (cache != null) {
+            for (Object key : cache.keys()) {
+                cache.remove(key);
+            }
+
+        }
     }
 }

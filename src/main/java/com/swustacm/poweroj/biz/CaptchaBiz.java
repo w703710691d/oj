@@ -18,6 +18,7 @@ import java.util.UUID;
 @RequestMapping("/captcha")
 
 public class CaptchaBiz {
+    private final String keyPrefix = "captcha:";
 
     @Autowired
     RedisUtils redisUtils;
@@ -26,7 +27,7 @@ public class CaptchaBiz {
         String verCode = specCaptcha.text().toLowerCase();
         System.out.println("验证码："+verCode);
         String verKey = UUID.randomUUID().toString();
-        redisUtils.set(verKey,verCode,5*60);
+        redisUtils.set(keyPrefix+verKey,verCode,5*60);
         return new Captcha().setVerKey(verKey).setBase64(specCaptcha.toBase64()).setVerCode(verCode);
     }
 
@@ -34,7 +35,7 @@ public class CaptchaBiz {
     public void verify(String verCode, String verKey) {
         if(verCode == null)
             throw new CustomException(CodeEnum.CODE_ERROR);
-        String code =  redisUtils.get(verKey);
+        String code =  redisUtils.get(keyPrefix+verKey);
         if(code == null)
             throw  new CustomException(CodeEnum.CODE_EXPIRE);
         if( !(code.equals(verCode.trim().toLowerCase())))
