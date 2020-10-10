@@ -3,7 +3,9 @@ package com.swustacm.poweroj.problem;
 
 import com.swustacm.poweroj.common.CommonResult;
 import com.swustacm.poweroj.problem.entity.ProblemSearchParam;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -15,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2020-10-09
  */
 @RestController
-@RequestMapping("/problem")
+@RequestMapping("/dev/problem")
 public class ProblemController {
     @Autowired
     ProblemBiz problem;
@@ -26,7 +28,7 @@ public class ProblemController {
      * @return
      */
     @PostMapping("/index")
-    public CommonResult index(@RequestBody ProblemSearchParam problemSearchParam){
+    public CommonResult index(@RequestBody @Validated ProblemSearchParam problemSearchParam){
         return problem.searchAll(problemSearchParam);
     }
 

@@ -66,7 +66,7 @@ public class Problem implements Serializable {
     private Integer atime;
 
     @TableField("ctime")
-    private Integer ctime;
+    private String ctime;
 
     @TableField("mtime")
     private Integer mtime;

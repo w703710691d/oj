@@ -36,12 +36,15 @@
         pid,title,source,accepted,submission,FROM_UNIXTIME(ctime, '%Y-%m-%d %H:%i:%s') as ctime ,status
         from
         problem
-        where
-        title like  CONCAT("%",#{title},"%")
-        and source like CONCAT("%",#{source},"%")
-        <if test="status != null">
-        and status = #{status}
+        <if test="source != null || title != null ">
+            where
+            title like  CONCAT("%",#{title},"%")
+            and source like CONCAT("%",#{source},"%")
+            <if test="status != null">
+                and status = #{status}
+            </if>
         </if>
+
 
         ORDER BY pid
 
