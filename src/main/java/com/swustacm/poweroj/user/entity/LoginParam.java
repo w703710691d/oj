@@ -1,4 +1,4 @@
-package com.swustacm.poweroj.params;
+package com.swustacm.poweroj.user.entity;
 
 import lombok.Data;
 

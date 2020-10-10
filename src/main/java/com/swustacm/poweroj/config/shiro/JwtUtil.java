@@ -6,8 +6,8 @@ import com.auth0.jwt.algorithms.Algorithm;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.swustacm.poweroj.entity.User;
-import com.swustacm.poweroj.service.UserService;
+import com.swustacm.poweroj.user.entity.User;
+import com.swustacm.poweroj.user.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;

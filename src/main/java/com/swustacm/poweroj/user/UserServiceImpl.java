@@ -1,15 +1,15 @@
-package com.swustacm.poweroj.service.impl;
+package com.swustacm.poweroj.user;
 
-import com.swustacm.poweroj.entity.User;
 import com.swustacm.poweroj.mapper.UserMapper;
-import com.swustacm.poweroj.params.Role;
-import com.swustacm.poweroj.service.UserService;
+import com.swustacm.poweroj.user.entity.User;
+import com.swustacm.poweroj.user.entity.Role;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * <p>
@@ -42,5 +42,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public List<String> getUserPermission(int id) {
         return userMapper.getUserPermission(id);
+    }
+
+    @Override
+    public boolean hasRole(String admin) {
+        Subject subject = SecurityUtils.getSubject();
+        if (subject == null && admin==null)
+            return false;
+        try{
+
+            return subject.hasRole(admin);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

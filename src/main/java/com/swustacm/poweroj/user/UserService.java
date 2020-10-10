@@ -1,11 +1,10 @@
-package com.swustacm.poweroj.service;
+package com.swustacm.poweroj.user;
 
-import com.swustacm.poweroj.entity.User;
+import com.swustacm.poweroj.user.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.swustacm.poweroj.params.Role;
+import com.swustacm.poweroj.user.entity.Role;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * <p>
@@ -22,4 +21,6 @@ public interface UserService extends IService<User> {
     List<Role> getUserRole(int uid);
 
     List<String> getUserPermission(int id);
+
+    boolean hasRole(String admin);
 }

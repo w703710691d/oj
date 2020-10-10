@@ -2,7 +2,7 @@ package com.swustacm.poweroj.common.util;
 
 import com.google.gson.Gson;
 import com.swustacm.poweroj.common.PojoToMapUtils;
-import com.swustacm.poweroj.entity.User;
+import com.swustacm.poweroj.user.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;

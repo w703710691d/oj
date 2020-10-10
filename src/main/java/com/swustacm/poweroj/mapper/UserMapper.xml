@@ -3,7 +3,7 @@
 <mapper namespace="com.swustacm.poweroj.mapper.UserMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.swustacm.poweroj.entity.User">
+    <resultMap id="BaseResultMap" type="com.swustacm.poweroj.user.entity.User">
         <id column="uid" property="uid" />
         <result column="tid" property="tid" />
         <result column="name" property="name" />
@@ -40,7 +40,7 @@
         <result column="data" property="data" />
         <result column="token" property="token" />
     </resultMap>
-    <select id="getUserRole" resultType="com.swustacm.poweroj.params.Role">
+    <select id="getUserRole" resultType="com.swustacm.poweroj.user.entity.Role">
         SELECT
         r.name as name ,
         r.id as id

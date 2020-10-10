@@ -1,4 +1,4 @@
-package com.swustacm.poweroj.biz;
+package com.swustacm.poweroj.captcha;
 
 import com.swustacm.poweroj.common.CodeEnum;
 import com.swustacm.poweroj.common.CustomException;
@@ -15,8 +15,6 @@ import java.util.UUID;
  * @author zvy
  */
 @RestController
-@RequestMapping("/captcha")
-
 public class CaptchaBiz {
     private final String keyPrefix = "captcha:";
 

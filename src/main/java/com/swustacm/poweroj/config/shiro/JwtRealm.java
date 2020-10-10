@@ -2,9 +2,9 @@ package com.swustacm.poweroj.config.shiro;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.swustacm.poweroj.common.util.CollectionUtils;
-import com.swustacm.poweroj.entity.User;
-import com.swustacm.poweroj.params.Role;
-import com.swustacm.poweroj.service.UserService;
+import com.swustacm.poweroj.user.entity.User;
+import com.swustacm.poweroj.user.entity.Role;
+import com.swustacm.poweroj.user.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -95,7 +95,7 @@ public class JwtRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 
         String jwt;
-        if (!CollectionUtils.exist(environment.getActiveProfiles(), "dev")) {
+        if (CollectionUtils.exist(environment.getActiveProfiles(), "dev")) {
             jwt = TOKEN_DEV;
         } else {
             jwt = (String) token.getPrincipal();

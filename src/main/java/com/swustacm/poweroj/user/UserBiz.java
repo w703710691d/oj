@@ -1,14 +1,14 @@
-package com.swustacm.poweroj.biz;
+package com.swustacm.poweroj.user;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.swustacm.poweroj.captcha.CaptchaBiz;
 import com.swustacm.poweroj.common.CommonResult;
 import com.swustacm.poweroj.common.GlobalConstant;
 import com.swustacm.poweroj.common.util.CollectionUtils;
 import com.swustacm.poweroj.common.util.IPUtils;
 import com.swustacm.poweroj.config.shiro.JwtUtil;
-import com.swustacm.poweroj.entity.User;
-import com.swustacm.poweroj.params.LoginParam;
-import com.swustacm.poweroj.service.UserService;
+import com.swustacm.poweroj.user.entity.User;
+import com.swustacm.poweroj.user.entity.LoginParam;
 import jodd.util.BCrypt;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
