@@ -1,6 +1,6 @@
 package com.swustacm.poweroj.common.util;
 
-import com.google.gson.Gson;
+
 import com.swustacm.poweroj.common.PojoToMapUtils;
 import com.swustacm.poweroj.user.entity.User;
 import lombok.extern.slf4j.Slf4j;
@@ -23,27 +23,6 @@ import java.util.List;
 public class ExcelUtils<T> {
     public final static String XLS = "xls";
     public final static String XLSX = "xlsx";
-
-    public static void main(String[] args) throws IOException {
-        List<User> users = new ArrayList<>();
-        User user = new User();
-        user.setUid(23423423);
-        user.setName("132423");
-        user.setPassword("sdasda");
-        user.setToken("edfdfsfs");
-        user.setAvatar("#@$2342");
-        users.add(user);
-        List<String> strings = new ArrayList<String>(){{add("3rerew");add("3242342");}};
-
-        Workbook workbook = ExcelUtils.exportData(users,strings,ExcelUtils.XLSX);
-        OutputStream outputStream = new FileOutputStream("D:/4455454.xlsx");
-        workbook.write(outputStream);
-        workbook.close();
-        outputStream.flush();
-        outputStream.close();
-        List<User> users1 = ExcelUtils.readExcel("D:/4455454.xlsx",user);
-        System.out.println(new Gson().toJson(users1));
-    }
 
     /**
      * 根据文件后缀名类型获取对应的工作簿对象
