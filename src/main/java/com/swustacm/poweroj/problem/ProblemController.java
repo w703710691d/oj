@@ -3,6 +3,7 @@ package com.swustacm.poweroj.problem;
 
 import com.swustacm.poweroj.common.CommonResult;
 import com.swustacm.poweroj.problem.entity.ProblemSearchParam;
+import org.apache.commons.collections4.Get;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -30,6 +31,12 @@ public class ProblemController {
     @PostMapping("/index")
     public CommonResult index(@RequestBody @Validated ProblemSearchParam problemSearchParam){
         return problem.searchAll(problemSearchParam);
+    }
+
+
+    @GetMapping("/show")
+    public CommonResult show(@RequestParam Integer pid){
+        return problem.showProblem(pid);
     }
 
 }
