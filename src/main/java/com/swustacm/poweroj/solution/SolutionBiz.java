@@ -1,5 +1,6 @@
 package com.swustacm.poweroj.solution;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.swustacm.poweroj.common.CommonResult;
 import com.swustacm.poweroj.solution.entity.ShowSolutionParam;
@@ -19,16 +20,13 @@ public class SolutionBiz {
     @Autowired
     UserService userService;
 
-    public CommonResult showSolution(ShowSolutionParam param){
+    public CommonResult<IPage<Solution>> showSolution(ShowSolutionParam param){
         Integer status = null;
         if (!userService.hasRole("admin") && !userService.hasRole("teacher")) {
             status = 1;
         }
-        Page<Solution> solutionPage = solutionService.showSolution(param,status);
+        IPage<Solution> solutionPage = solutionService.showSolution(param,status);
         HashMap<String, Object> map = new HashMap<>();
-        map.put("total",solutionPage.getTotal());
-        map.put("current",solutionPage.getCurrent());
-        map.put("queryList",solutionPage.getRecords());
-        return CommonResult.ok(map);
+        return CommonResult.ok(solutionPage);
     }
 }
