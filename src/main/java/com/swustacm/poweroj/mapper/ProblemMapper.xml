@@ -50,5 +50,46 @@
 
 
     </select>
+    <select id="getPrevPid" resultType="java.lang.Integer">
+        select pid
+        FROM problem
+        WHERE pid &lt; #{pid}
+        <if test="status != null">
+            and status = #{status}
+        </if>
+        ORDER by pid Desc limit 1
+    </select>
+    <select id="getNextPid" resultType="java.lang.Integer">
+        select pid
+        FROM problem
+        WHERE pid &gt; #{pid}
+        <if test="status != null">
+            and status = #{status}
+        </if>
+        ORDER by pid limit 1
+    </select>
+    <select id="getMaxMInPid" resultType="java.lang.Integer">
+        Select max(pid),min(pid)
+        from
+        problem
+    </select>
+    <select id="getPid" resultType="java.lang.Integer">
+        select pid
+        where pid #{randomPid}
+        <if test="param2 != null">
+            and status = #{param2}
+        </if>
+    </select>
+    <select id="getTags" resultType="org.apache.poi.hssf.record.Record">
+        SELECT t.id,t.tag as name ,u.name as user,u.uid
+        FROM  tag t
+        LEFT JOIN user u on u.uid = t.uid
+        where
+        t.pid = #{pid}
+        and t.status = 1
+    </select>
+    <select id="getUserResult" resultType="java.lang.Integer">
+        SELECT MIN(result) AS result FROM solution WHERE uid=#{param2} AND pid=#{param1} AND status=1 LIMIT 1
+    </select>
 
 </mapper>

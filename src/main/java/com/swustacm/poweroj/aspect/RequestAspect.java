@@ -11,7 +11,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Aspect
 @Component
@@ -49,7 +52,16 @@ public class RequestAspect {
             logger.info("Method             : {} ", signature.getName());
             logger.info("请求URL             : {} ", request.getRequestURI());
             logger.info("HTTP Method        : {} ", request.getMethod());
+            for (int i= 0; i<joinPoint.getArgs().length;i++) {
+                if(joinPoint.getArgs()[i] instanceof ServletResponse){
+                    joinPoint.getArgs()[i] = null;
+                }
+                if(joinPoint.getArgs()[i] instanceof ServletRequest){
+                    joinPoint.getArgs()[i] = null;
+                }
+            }
             logger.info("Web请求参数          : {} ", new Gson().toJson(joinPoint.getArgs()));
+
         } catch (Exception e) {
             logger.info("Gson序列化异常        :{} ", e.getMessage());
         }

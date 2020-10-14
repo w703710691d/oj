@@ -3,13 +3,23 @@ package com.swustacm.poweroj.biz;
 import com.swustacm.poweroj.common.CommonResult;
 import com.swustacm.poweroj.common.util.DateConvert;
 import com.swustacm.poweroj.common.util.CollectionUtils;
+import com.swustacm.poweroj.common.util.ExcelUtils;
+import com.swustacm.poweroj.common.util.FileUtil;
+import com.swustacm.poweroj.entity.ExperienceScore;
 import com.swustacm.poweroj.mapper.ContestMapper;
 import com.swustacm.poweroj.mapper.ScoreMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.jdbc.SQL;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -105,4 +115,21 @@ public class ScoreBiz {
         }}.toString();
     }
 
+    public void getScoreExcel(HttpServletResponse response) throws IOException {
+        String path = "D:/4455454.xlsx";
+        List<ExperienceScore> experienceScoreList = new ArrayList<>();
+        ExperienceScore experienceScore = new ExperienceScore();
+        experienceScore.setAc1(100);
+        experienceScoreList.add(experienceScore);
+
+        List<String> header = new ArrayList<String>(){{add("班级");add("学号");add("姓名");add("第1次实验成绩");add("第1次报告成绩");add("第2次实验成绩");add("第2次报告成绩");add("第3次实验成绩");add("第3次报告成绩");add("第4次实验成绩");add("第4次报告成绩");add("第5次实验成绩");add("第5次报告成绩");add("第6次实验成绩");add("第6次报告成绩");add("第7次实验成绩");add("第7次报告成绩");add("第8次实验成绩");add("第8次报告成绩");}};
+        Workbook workbook = ExcelUtils.exportData(experienceScoreList,header,ExcelUtils.XLSX);
+        OutputStream outputStream = new FileOutputStream(path);
+        workbook.write(outputStream);
+        workbook.close();
+        outputStream.flush();
+        outputStream.close();
+        FileUtil.exportFile(response, path,"4455454");
+
+    }
 }
