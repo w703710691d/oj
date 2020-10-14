@@ -95,7 +95,7 @@ public class JwtRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 
         String jwt;
-        if (!CollectionUtils.exist(environment.getActiveProfiles(), "dev")) {
+        if (CollectionUtils.exist(environment.getActiveProfiles(), "dev")) {
             jwt = TOKEN_DEV;
         } else {
             jwt = (String) token.getPrincipal();
