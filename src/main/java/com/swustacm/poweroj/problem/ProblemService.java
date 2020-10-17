@@ -29,4 +29,6 @@ public interface ProblemService extends IService<Problem> {
     List<Record> getTags(Integer pid);
 
     Integer getUserResult(Integer pid);
+
+    Problem getProblemForShow(Integer pid);
 }

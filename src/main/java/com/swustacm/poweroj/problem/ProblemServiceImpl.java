@@ -8,6 +8,8 @@ import com.swustacm.poweroj.mapper.ProblemMapper;
 import com.swustacm.poweroj.problem.entity.Problem;
 import com.swustacm.poweroj.problem.entity.ProblemSearchParam;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.swustacm.poweroj.user.UserService;
+import jodd.util.StringUtil;
 import org.apache.poi.hssf.record.Record;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,8 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
     ProblemMapper problemMapper;
     @Autowired
     JwtUtil jwtUtil;
+    @Autowired
+    UserService userService;
     @Override
     public Page<Problem> searchProblem(ProblemSearchParam param,Integer status) {
     Page<Problem> page = new Page<>(param.getPage(),param.getLimit());
@@ -79,6 +83,33 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
             return null;
         }
         return problemMapper.getUserResult(pid,uid);
+    }
+
+    @Override
+    public Problem getProblemForShow(Integer pid) {
+        //oj上为 从 缓冲获取 Problem
+        Problem problem = this.getById(pid);
+        if(problem == null){
+            return null;
+        }
+
+        if((!(userService.hasRole("admin") || userService.hasRole("teacher"))) && !problem.getStatus()){
+            return null;
+        }
+        int sampleInputRows = 1;
+        if(StringUtil.isNotBlank(problem.getSampleInput())){
+            sampleInputRows = StringUtil.count(problem.getSampleInput(),"\n")+1;
+        }
+        problem.setSampleInputRows(sampleInputRows);
+        int sampleOutputRows = 1;
+        if(StringUtil.isNotBlank(problem.getSampleOutput())){
+            sampleOutputRows = StringUtil.count(problem.getSampleOutput(),"\n")+1;
+        }
+        problem.setSampleInputRows(sampleOutputRows);
+        problem.setView(problem.getView()+1);
+        this.updateById(problem);
+
+        return problem;
     }
 }
 

@@ -7,14 +7,13 @@ import com.swustacm.poweroj.problem.entity.Problem;
 import com.swustacm.poweroj.problem.entity.ProblemSearchParam;
 import com.swustacm.poweroj.user.UserService;
 
+import com.swustacm.poweroj.user.entity.LogicalEnum;
 import org.apache.poi.hssf.record.Record;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Component
@@ -25,7 +24,7 @@ public class ProblemBiz {
     UserService userService;
     public CommonResult searchAll(ProblemSearchParam param) {
         Integer status = null;
-        if (!userService.hasRole("admin") && !userService.hasRole("teacher")) {
+        if (!userService.hasRole(Arrays.asList("admin", "teacher"), LogicalEnum.AND)) {
                  status = 1;
         }
         Page<Problem> problemPage = problemService.searchProblem(param,status);
@@ -37,7 +36,7 @@ public class ProblemBiz {
     }
 
     public CommonResult showProblem(Integer pid) {
-        Problem  problem = problemService.getById(pid);
+        Problem  problem = problemService.getProblemForShow(pid);
         if (problem == null){
             return CommonResult.error();
         }
