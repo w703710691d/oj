@@ -91,5 +91,11 @@
     <select id="getUserResult" resultType="java.lang.Integer">
         SELECT MIN(result) AS result FROM solution WHERE uid=#{param2} AND pid=#{param1} AND status=1 LIMIT 1
     </select>
+    <select id="getProblemStatus" resultType="com.swustacm.poweroj.problem.entity.ProblemStatus">
+        SELECT result , count(*) as count
+        FROM solution
+        WHERE pid = #{pid} and status = 1
+        GROUP BY result
+    </select>
 
 </mapper>

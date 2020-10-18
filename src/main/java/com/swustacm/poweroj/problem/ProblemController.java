@@ -2,6 +2,7 @@ package com.swustacm.poweroj.problem;
 
 
 import com.swustacm.poweroj.common.CommonResult;
+import com.swustacm.poweroj.params.PageParam;
 import com.swustacm.poweroj.problem.entity.ProblemSearchParam;
 import org.apache.commons.collections4.Get;
 import org.apache.ibatis.annotations.Param;
@@ -33,11 +34,27 @@ public class ProblemController {
         return problem.searchAll(problemSearchParam);
     }
 
-
+    /**
+     * 更具题目id返回题目的内容
+     * @param pid  题目id
+     * @return
+     */
     @GetMapping("/show")
     public CommonResult show(@RequestParam Integer pid){
         return problem.showProblem(pid);
     }
+
+    /**
+     * 查询该题目的状态信息
+     * @param pid 题目id
+     * @return
+     */
+    @PostMapping("/status")
+    public CommonResult status(@RequestParam Integer pid ,@RequestBody @Validated PageParam page){
+        return problem.getStatus(pid ,page);
+    }
+
+
 
 }
 

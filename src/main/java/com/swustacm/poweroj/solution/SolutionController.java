@@ -4,7 +4,6 @@ package com.swustacm.poweroj.solution;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.swustacm.poweroj.common.CommonResult;
 import com.swustacm.poweroj.problem.ProblemService;
-import com.swustacm.poweroj.service.ContestService;
 import com.swustacm.poweroj.solution.entity.ShowSolutionParam;
 import com.swustacm.poweroj.solution.entity.Solution;
 import com.swustacm.poweroj.user.UserService;

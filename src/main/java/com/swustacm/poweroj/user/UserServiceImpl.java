@@ -1,6 +1,8 @@
 package com.swustacm.poweroj.user;
 
+
 import com.swustacm.poweroj.mapper.UserMapper;
+import com.swustacm.poweroj.user.entity.LogicalEnum;
 import com.swustacm.poweroj.user.entity.User;
 import com.swustacm.poweroj.user.entity.Role;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -8,7 +10,6 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 /**
@@ -20,9 +21,12 @@ import java.util.List;
  * @since 2020-09-20
  */
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+public  class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     @Autowired
     UserMapper userMapper;
+
+
+
 
     @Override
     public User updateLogin(User user,String ip) {
@@ -57,4 +61,26 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
         return false;
     }
+    public boolean hasRole(List<String> strings, LogicalEnum str){
+        Subject subject = SecurityUtils.getSubject();
+        boolean[] list = subject.hasRoles(strings);
+        if(str.equals(LogicalEnum.OR)){
+            for (boolean flag: list) {
+                if (flag)
+                    return true;
+            }
+            return false;
+        }
+        if (str.equals(LogicalEnum.AND)) {
+
+            for (boolean flag : list) {
+                if (!flag)
+                    return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
+
 }

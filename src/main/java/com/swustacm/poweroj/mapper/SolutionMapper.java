@@ -22,6 +22,7 @@ import javax.swing.*;
 public interface SolutionMapper extends BaseMapper<Solution> {
     Page<Solution> solutionPage(Page<Solution> page,@Param("pid") String pid,@Param("userName") String userName,@Param("language") String language,@Param("result") String result,Integer status);
 
+
     Solution findSolution(@Param("sid") Integer sid);
 
     String getProblemTitle(@Param("cid") Integer cid,@Param("num") Integer num);
@@ -29,4 +30,7 @@ public interface SolutionMapper extends BaseMapper<Solution> {
     String getLanguage(@Param("key") Integer key);
 
     User getUser(@Param("uid") Integer uid);
+
+    Page<Solution> getSolutionPro(Page<Solution> page1, Integer pid);
+
 }
