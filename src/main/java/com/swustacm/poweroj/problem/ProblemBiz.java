@@ -3,8 +3,11 @@ package com.swustacm.poweroj.problem;
 
 import com.swustacm.poweroj.common.CommonResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.swustacm.poweroj.conest.ConestVar;
+import com.swustacm.poweroj.params.PageParam;
 import com.swustacm.poweroj.problem.entity.Problem;
 import com.swustacm.poweroj.problem.entity.ProblemSearchParam;
+import com.swustacm.poweroj.solution.entity.Solution;
 import com.swustacm.poweroj.user.UserService;
 
 import com.swustacm.poweroj.user.entity.LogicalEnum;
@@ -22,6 +25,25 @@ public class ProblemBiz {
     ProblemService problemService;
     @Autowired
     UserService userService;
+
+    public  CommonResult getStatus(Integer pid ,PageParam page) {
+        Problem problem = problemService.getProblem(pid);
+        Map<String,Object>  map = new HashMap<>();
+
+        map.put("program_languages", ConestVar.languageName);
+        map.put("problem",problem);
+        map.put("resultList",problemService.getProblemStatus(pid));
+
+        Page<Solution> pageList = problemService.getProblemUser(pid,page);
+        Map<String,Object> mapIn = new HashMap<>();
+        mapIn.put("total",pageList.getTotal());
+        mapIn.put("current",pageList.getCurrent());
+        mapIn.put("queryList",pageList.getRecords());
+
+        map.put("userPage",mapIn);
+        return CommonResult.ok(map);
+    }
+
     public CommonResult searchAll(ProblemSearchParam param) {
         Integer status = null;
         if (!userService.hasRole(Arrays.asList("admin", "teacher"), LogicalEnum.AND)) {

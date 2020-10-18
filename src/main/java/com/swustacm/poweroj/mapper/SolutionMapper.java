@@ -19,4 +19,6 @@ import javax.swing.*;
 @Component
 public interface SolutionMapper extends BaseMapper<Solution> {
     Page<Solution> solutionPage(Page<Solution> page,@Param("pid") String pid,@Param("userName") String userName,@Param("language") String language,@Param("result") String result,Integer status);
+
+    Page<Solution> getSolutionPro(Page<Solution> page1, Integer pid);
 }

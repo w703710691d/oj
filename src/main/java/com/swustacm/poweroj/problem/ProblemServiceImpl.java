@@ -3,16 +3,27 @@ package com.swustacm.poweroj.problem;
 
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.swustacm.poweroj.conest.ConestVar;
+import com.swustacm.poweroj.conest.ResultType;
 import com.swustacm.poweroj.config.shiro.JwtUtil;
 import com.swustacm.poweroj.mapper.ProblemMapper;
+import com.swustacm.poweroj.mapper.SolutionMapper;
+import com.swustacm.poweroj.params.PageParam;
 import com.swustacm.poweroj.problem.entity.Problem;
 import com.swustacm.poweroj.problem.entity.ProblemSearchParam;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.swustacm.poweroj.problem.entity.ProblemStatus;
+import com.swustacm.poweroj.solution.entity.Solution;
 import com.swustacm.poweroj.user.UserService;
+import com.swustacm.poweroj.user.entity.LogicalEnum;
 import jodd.util.StringUtil;
 import org.apache.poi.hssf.record.Record;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -32,6 +43,8 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
     JwtUtil jwtUtil;
     @Autowired
     UserService userService;
+    @Autowired
+    SolutionMapper solutionMapper;
     @Override
     public Page<Problem> searchProblem(ProblemSearchParam param,Integer status) {
     Page<Problem> page = new Page<>(param.getPage(),param.getLimit());
@@ -110,6 +123,37 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
         this.updateById(problem);
 
         return problem;
+    }
+
+    @Override
+    public Problem getProblem(Integer pid) {
+        Problem problem = this.getById(pid);
+        if (problem == null){
+            return null;
+        }
+        if(userService.hasRole(Arrays.asList("admin", "teacher"), LogicalEnum.OR)){
+            return problem;
+        }else if(problem.getStatus()){
+            return problem;
+        }
+        return null;
+    }
+
+    @Override
+    public List<ProblemStatus> getProblemStatus(Integer pid) {
+        List<ProblemStatus> list = problemMapper.getProblemStatus(pid);
+        for(ProblemStatus status : list){
+            ResultType resultType = ConestVar.resultType.get(status.getResult());
+            status.setName(resultType.getName());
+            status.setLongName(resultType.getLongName());
+        }
+        return list;
+    }
+
+    @Override
+    public Page<Solution> getProblemUser(Integer pid, PageParam page) {
+        Page<Solution> page1 = new Page<>(page.getPage(),page.getLimit());
+        return solutionMapper.getSolutionPro(page1,pid);
     }
 }
 

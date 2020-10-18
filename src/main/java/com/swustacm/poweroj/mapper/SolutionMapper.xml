@@ -56,5 +56,13 @@ FROM
 ORDER BY
 	s.ctime DESC
     </select>
+    <select id="getSolutionPro" resultType="com.swustacm.poweroj.solution.entity.Solution">
+        SELECT s.sid,u.name as userName, s.time,s.memory,s.language,s.codeLen, FROM_UNIXTIME(s.ctime,'%Y-%m-%d %H:%i:%s') as stime
+         FROM  solution as s left join user as u on s.uid = u.uid
+         Where s.pid = #{param2}
+
+        order by s.time ASC
+
+    </select>
 
 </mapper>

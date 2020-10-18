@@ -3,6 +3,7 @@ package com.swustacm.poweroj.mapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.swustacm.poweroj.problem.entity.Problem;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.swustacm.poweroj.problem.entity.ProblemStatus;
 import org.apache.ibatis.annotations.Param;
 import org.apache.poi.hssf.record.Record;
 import org.springframework.stereotype.Component;
@@ -33,4 +34,6 @@ public interface ProblemMapper extends BaseMapper<Problem> {
     List<Record> getTags(Integer pid);
 
     Integer getUserResult(Integer pid, Integer uid);
+
+    List<ProblemStatus> getProblemStatus(Integer pid);
 }

@@ -1,9 +1,12 @@
 package com.swustacm.poweroj.problem;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.swustacm.poweroj.params.PageParam;
 import com.swustacm.poweroj.problem.entity.Problem;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.swustacm.poweroj.problem.entity.ProblemSearchParam;
+import com.swustacm.poweroj.problem.entity.ProblemStatus;
+import com.swustacm.poweroj.solution.entity.Solution;
 import org.apache.poi.hssf.record.Record;
 
 import java.util.List;
@@ -31,4 +34,10 @@ public interface ProblemService extends IService<Problem> {
     Integer getUserResult(Integer pid);
 
     Problem getProblemForShow(Integer pid);
+
+    Problem getProblem(Integer pid);
+
+    List<ProblemStatus> getProblemStatus(Integer pid);
+
+    Page<Solution> getProblemUser(Integer pid , PageParam page);
 }
