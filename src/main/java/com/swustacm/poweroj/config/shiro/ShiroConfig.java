@@ -23,7 +23,7 @@ import java.util.Map;
  * @author xingzi
  */
 @Configuration
-public class ShiroConfig {
+public class  ShiroConfig {
     /*
      * a. 告诉shiro不要使用默认的DefaultSubject创建对象，因为不能创建Session
      * */

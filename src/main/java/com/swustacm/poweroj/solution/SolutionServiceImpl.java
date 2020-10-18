@@ -5,6 +5,7 @@ import com.swustacm.poweroj.solution.entity.ShowSolutionParam;
 import com.swustacm.poweroj.solution.entity.Solution;
 import com.swustacm.poweroj.mapper.SolutionMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.swustacm.poweroj.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,4 +27,25 @@ public class SolutionServiceImpl extends ServiceImpl<SolutionMapper, Solution> i
         Page<Solution> solutionPage = new Page<>(param.getPage(),param.getLimit());
         return solutionMapper.solutionPage(solutionPage,param.getPid(),param.getUserName(),param.getLanguage(),param.getResult(),status);
     }
+
+    @Override
+    public Solution findSolution(Integer sid) {
+        return solutionMapper.findSolution(sid);
+    }
+
+    @Override
+    public String getProblemTitle(Integer cid, Integer num) {
+        return  solutionMapper.getProblemTitle(cid,num);
+    }
+
+    @Override
+    public String getLanguage(Integer key) {
+        return solutionMapper.getLanguage(key);
+    }
+
+    @Override
+    public User findUser(Integer uid) {
+        return solutionMapper.getUser(uid);
+    }
+
 }
