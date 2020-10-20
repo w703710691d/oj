@@ -1,6 +1,6 @@
-package com.swustacm.poweroj.controller;
+package com.swustacm.poweroj.captcha;
 
-import com.swustacm.poweroj.biz.CaptchaBiz;
+import com.swustacm.poweroj.captcha.CaptchaBiz;
 import com.swustacm.poweroj.common.CommonResult;
 import com.swustacm.poweroj.params.Captcha;
 import org.springframework.beans.factory.annotation.Autowired;

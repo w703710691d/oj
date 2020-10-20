@@ -1,4 +1,4 @@
-package com.swustacm.poweroj.entity;
+package com.swustacm.poweroj.user.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -175,6 +175,7 @@ public class User implements Serializable {
 
     @TableField("token")
     private String token;
+
 //    private Long data1;
 //    private Date data2;
 //    private LocalDateTime data3;

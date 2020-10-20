@@ -79,7 +79,7 @@ public class Genarator {
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         //包含表
-        strategy.setInclude("");
+        strategy.setInclude("program_language");
         //lombok
         strategy.setEntityLombokModel(true);
         //restController

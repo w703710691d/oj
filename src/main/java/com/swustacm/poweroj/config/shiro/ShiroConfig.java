@@ -1,5 +1,6 @@
 package com.swustacm.poweroj.config.shiro;
 
+import com.swustacm.poweroj.config.redis.RedisManager;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.mgt.SubjectFactory;
@@ -22,7 +23,7 @@ import java.util.Map;
  * @author xingzi
  */
 @Configuration
-public class ShiroConfig {
+public class  ShiroConfig {
     /*
      * a. 告诉shiro不要使用默认的DefaultSubject创建对象，因为不能创建Session
      * */
@@ -51,6 +52,8 @@ public class ShiroConfig {
         defaultSessionStorageEvaluator.setSessionStorageEnabled(false);
         subjectDAO.setSessionStorageEvaluator(defaultSessionStorageEvaluator);
         securityManager.setSubjectDAO(subjectDAO);
+        //配置redis缓冲
+        securityManager.setCacheManager(cacheManager());
         //禁止Subject的getSession方法
         securityManager.setSubjectFactory(subjectFactory());
         return securityManager;
@@ -88,5 +91,25 @@ public class ShiroConfig {
         AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
         authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
         return authorizationAttributeSourceAdvisor;
+    }
+    /**
+     * shiro缓存管理器;
+     * 需要添加到securityManager中
+     * @return
+     */
+    @Bean
+    public RedisCacheManager cacheManager(){
+        RedisCacheManager redisCacheManager = new RedisCacheManager();
+        redisCacheManager.setRedisManager(redisManager());
+        //redis中针对不同用户缓存
+        redisCacheManager.setPrincipalIdFieldName("jwt");
+        //用户权限信息缓存时间
+        redisCacheManager.setExpire(200000);
+        return redisCacheManager;
+    }
+    @Bean
+    public RedisManager redisManager(){
+        return new RedisManager();
+
     }
 }

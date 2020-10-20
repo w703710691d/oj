@@ -1,12 +1,11 @@
 package com.swustacm.poweroj.mapper;
 
-import com.swustacm.poweroj.entity.User;
+import com.swustacm.poweroj.user.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.swustacm.poweroj.params.Role;
+import com.swustacm.poweroj.user.entity.Role;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * <p>
