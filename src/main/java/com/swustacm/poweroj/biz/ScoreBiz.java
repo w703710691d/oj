@@ -43,7 +43,24 @@ public class ScoreBiz {
         return CommonResult.ok(scoreMapper.getScoreByTime(sql));
     }
 
-
+    public CommonResult<List<Map<String, Object>>> getSemesterByYear(String year, DateConvert semester) {
+        Long start,end;
+        System.out.println(semester);
+        if(semester == DateConvert.AUTUMN_TERM){
+              start = DateConvert.getSemesterByYear(year, DateConvert.AUTUMN_TERM_BEGIN);
+              end = DateConvert.getSemesterByYear(String.valueOf(Integer.parseInt(year)+1), DateConvert.AUTUMN_TERM_END);
+        }else{
+            start = DateConvert.getSemesterByYear(year, DateConvert.SPRING_TERM_BEGIN);
+            end = DateConvert.getSemesterByYear(year, DateConvert.SPRING_TERM_END);
+        }
+        System.out.println(start);
+        System.out.println(end);
+        //获取该时间段所有的Cid
+        List<String> cids = contestMapper.getExperimentCid(start,end);
+        //sql构建
+        String sql = scoreBuild(cids,start,end);
+        return CommonResult.ok(scoreMapper.getScoreByTime(sql));
+    }
 
 
 
@@ -114,7 +131,6 @@ public class ScoreBiz {
             GROUP_BY("u.`name`");
         }}.toString();
     }
-
     public void getScoreExcel(HttpServletResponse response) throws IOException {
         String path = "D:/4455454.xlsx";
         List<ExperienceScore> experienceScoreList = new ArrayList<>();

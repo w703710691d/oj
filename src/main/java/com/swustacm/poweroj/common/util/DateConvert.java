@@ -12,6 +12,8 @@ import java.time.format.DateTimeFormatter;
  * @author xingzi
  */
 public enum DateConvert {
+    AUTUMN_TERM("autumn"),
+    SPRING_TERM("spring"),
       //年月日时间
      YEAR_DATE_TIME("yyyy-MM-dd HH:mm:ss"),
      YEAR_DATE("yyyy-MM-dd"),
