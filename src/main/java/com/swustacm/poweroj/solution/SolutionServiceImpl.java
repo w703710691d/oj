@@ -23,9 +23,14 @@ public class SolutionServiceImpl extends ServiceImpl<SolutionMapper, Solution> i
     @Autowired
     SolutionMapper solutionMapper;
     @Override
-    public Page<Solution> showSolution(ShowSolutionParam param,Integer status) {
+    public Page<Solution> showSolution(ShowSolutionParam param) {
         Page<Solution> solutionPage = new Page<>(param.getPage(),param.getLimit());
-        return solutionMapper.solutionPage(solutionPage,param.getPid(),param.getUserName(),param.getLanguage(),param.getResult(),status);
+        return solutionMapper.solutionPage(solutionPage,param);
+    }
+
+    @Override
+    public Integer findLanguageId(String language) {
+        return solutionMapper.findLanguageId(language);
     }
 
     @Override

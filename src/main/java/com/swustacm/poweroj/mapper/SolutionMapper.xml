@@ -40,17 +40,17 @@ FROM
 	solution s
 	INNER JOIN USER u ON u.uid = s.uid
 <where>
-    <if test="language != null">
-        s.LANGUAGE = #{language}
+    <if test="param.language != null">
+        s.LANGUAGE = #{param.language}
     </if>
-    <if test="userName != null">
-      and  u.NAME = #{userName}
+    <if test="param.userName != null">
+      and  u.NAME = #{param.userName}
     </if>
-    <if test="result != null">
-       and  result = #{result}
+    <if test="param.result != null">
+       and  result = #{param.result}
     </if>
-    <if test="pid != null">
-        and  pid = #{pid}
+    <if test="param.pid != null">
+        and  pid = #{param.pid}
     </if>
 </where>
 ORDER BY
@@ -73,6 +73,9 @@ ORDER BY
          FROM  solution as s left join user as u on s.uid = u.uid
          Where s.pid = #{param2}
         order by s.time ASC
+    </select>
+    <select id="findLanguageId" resultType="java.lang.Integer">
+        select id from program_language where #{language} = name
     </select>
 
 </mapper>

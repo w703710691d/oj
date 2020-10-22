@@ -1,6 +1,7 @@
 package com.swustacm.poweroj.mapper;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.swustacm.poweroj.solution.entity.ShowSolutionParam;
 import com.swustacm.poweroj.solution.entity.Solution;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.swustacm.poweroj.user.entity.User;
@@ -20,8 +21,9 @@ import javax.swing.*;
  */
 @Component
 public interface SolutionMapper extends BaseMapper<Solution> {
-    Page<Solution> solutionPage(Page<Solution> page,@Param("pid") String pid,@Param("userName") String userName,@Param("language") String language,@Param("result") String result,Integer status);
+    Page<Solution> solutionPage(Page<Solution> page, @Param("param")ShowSolutionParam param);
 
+    Integer findLanguageId(@Param("language") String language);
 
     Solution findSolution(@Param("sid") Integer sid);
 

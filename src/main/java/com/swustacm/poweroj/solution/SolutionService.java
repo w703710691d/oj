@@ -15,7 +15,9 @@ import com.swustacm.poweroj.user.entity.User;
  * @since 2020-10-11
  */
 public interface SolutionService extends IService<Solution> {
-    Page<Solution> showSolution(ShowSolutionParam param, Integer status);
+    Page<Solution> showSolution(ShowSolutionParam param);
+
+    Integer findLanguageId(String language);
 
     Solution findSolution(Integer sid);
 
