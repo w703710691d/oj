@@ -76,6 +76,7 @@ public class ShiroConfig {
         Map<String, String> filterRuleMap = new LinkedHashMap<>();
         filterRuleMap.put("/captcha/get", "anon");
         filterRuleMap.put("/dev/user/login", "anon");
+        filterRuleMap.put("/dev/user/signup","anon");
         filterRuleMap.put("/**",  "jwt");
         shiroFilter.setFilterChainDefinitionMap(filterRuleMap);
         return shiroFilter;
