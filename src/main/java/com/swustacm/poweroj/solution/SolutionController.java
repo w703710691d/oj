@@ -3,10 +3,14 @@ package com.swustacm.poweroj.solution;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.swustacm.poweroj.common.CommonResult;
+import com.swustacm.poweroj.common.GlobalConstant;
 import com.swustacm.poweroj.conest.ConestVar;
+
+import com.swustacm.poweroj.solution.entity.CodeInfo;
 import com.swustacm.poweroj.solution.entity.ShowSolutionParam;
 import com.swustacm.poweroj.solution.entity.Solution;
 import com.swustacm.poweroj.user.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -50,27 +54,26 @@ public class SolutionController {
      */
 
     @PostMapping("/code")
-    public CommonResult<Map> show(@RequestParam Integer sid) {
+    public CommonResult<CodeInfo> show(@RequestParam Integer sid) {
         Solution solution = solutionService.findSolution(sid);
-        HashMap<Object, Object> map = new HashMap<>();
+        CodeInfo codeInfo = new CodeInfo();
         Integer cid = solution.getCid();
+        System.out.println(cid);
         if (cid != null && cid > 0) {
             Integer num = solution.getNum();
-            String problemTitle;
-            problemTitle = solutionService.getProblemTitle(cid, num);
-            map.put("problemTitle", problemTitle);
+            codeInfo.setProblemTitle(solutionService.getProblemTitle(cid, num));
         }
-        map.put("submitLanguage", solutionService.getLanguage(solution.getLanguage()));
-        map.put("time", solution.getTime());
+        codeInfo.setSubmitLanguage(solutionService.getLanguage(solution.getLanguage()));
+        codeInfo.setTime((solution.getTime()));
 
-        if (userService.hasRole("admin") || userService.hasRole("teacher")) {
-            map.put("source",solution.getSource());
-            map.put("result", ConestVar.resultType.get(solution.getResult()));
-            return CommonResult.ok(map);
+        if (userService.hasRole(GlobalConstant.ADMIN) || userService.hasRole(GlobalConstant.TEACHER)) {
+            codeInfo.setSource(solution.getSource());
+            codeInfo.setResult(ConestVar.resultType.get(solution.getResult()));
+            return CommonResult.ok(codeInfo);
         }else if (solution.getResult().equals(0)){
-            map.put("source",solution.getSource());
-            map.put("result", ConestVar.resultType.get(solution.getResult()));
-            return CommonResult.ok(map);
+            codeInfo.setSource(solution.getSource());
+            codeInfo.setResult(ConestVar.resultType.get(solution.getResult()));
+            return CommonResult.ok(codeInfo);
         }else{
             return CommonResult.error("没有查看权限");
         }
