@@ -56,13 +56,23 @@ FROM
 ORDER BY
 	s.ctime DESC
     </select>
+    <select id="findSolution" resultType="com.swustacm.poweroj.solution.entity.Solution">
+        SELECT * FROM solution WHERE sid=#{sid} AND status=1 LIMIT 1
+    </select>
+    <select id="getProblemTitle" resultType="java.lang.String">
+        SELECT title FROM contest_problem WHERE cid=#{cid} AND num=#{num} LIMIT 1
+    </select>
+    <select id="getLanguage" resultType="java.lang.String">
+        SELECT name as submitLanguage FROM program_language WHERE id = #{key} and status=1
+    </select>
+    <select id="getUser" resultType="com.swustacm.poweroj.user.entity.User">
+        select * from USER where uid = #{uid}
+</select>
     <select id="getSolutionPro" resultType="com.swustacm.poweroj.solution.entity.Solution">
         SELECT s.sid,u.name as userName, s.time,s.memory,s.language,s.codeLen, FROM_UNIXTIME(s.ctime,'%Y-%m-%d %H:%i:%s') as stime
          FROM  solution as s left join user as u on s.uid = u.uid
          Where s.pid = #{param2}
-
         order by s.time ASC
-
     </select>
 
 </mapper>

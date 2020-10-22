@@ -3,6 +3,7 @@ package com.swustacm.poweroj.controller;
 
 import com.swustacm.poweroj.biz.ScoreBiz;
 import com.swustacm.poweroj.common.CommonResult;
+import com.swustacm.poweroj.common.util.DateConvert;
 import com.swustacm.poweroj.entity.ExperienceScore;
 import com.swustacm.poweroj.service.ScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,12 +102,21 @@ public class ScoreController {
         return  scoreBiz.getScoreTime(startTime,endTime);
     }
 
+    /**
+     * 根据学期统计成绩
+     * @param year 年份
+     * @param semester AUTUMN_TERM / SPRING_TERM
+     * @return
+     */
+    @GetMapping("/getSemesterByYear")
+    public CommonResult<List<Map<String,Object>>> getSemesterByYear(@RequestParam @NotEmpty(message = "学期开始时间不能为空") String year,
+                                                                 @RequestParam DateConvert semester){
+        return  scoreBiz.getSemesterByYear(year,semester);
+    }
 
     @GetMapping("/getScoreExcel")
     public void getScoreExcel(HttpServletResponse response)throws IOException {
          scoreBiz.getScoreExcel(response);
     }
-
-
 }
 
