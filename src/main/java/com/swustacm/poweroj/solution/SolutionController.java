@@ -15,9 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * 前端控制器
@@ -29,12 +26,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/solution")
 public class SolutionController {
-
-    /**
-     * 提交状态分页查询
-     *
-     * @param
-     */
     @Autowired
     SolutionBiz solutionBiz;
 
@@ -44,6 +35,11 @@ public class SolutionController {
     @Autowired
     UserService userService;
 
+    /**
+     * 提交状态分页查询
+     *
+     * @param param result language pid userName limit page
+     */
     @PostMapping("/index")
     public CommonResult<IPage<Solution>> showStatus(@RequestBody @Validated ShowSolutionParam param) {
         return solutionBiz.showSolution(param);
@@ -52,7 +48,6 @@ public class SolutionController {
     /**
      * 查看提交的代码（只有正确的代码能够查看）
      */
-
     @PostMapping("/code")
     public CommonResult<CodeInfo> show(@RequestParam Integer sid) {
         Solution solution = solutionService.findSolution(sid);
