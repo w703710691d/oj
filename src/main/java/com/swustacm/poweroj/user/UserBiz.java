@@ -7,6 +7,7 @@ import com.swustacm.poweroj.common.GlobalConstant;
 import com.swustacm.poweroj.common.util.CollectionUtils;
 import com.swustacm.poweroj.common.util.IPUtils;
 import com.swustacm.poweroj.config.shiro.JwtUtil;
+import com.swustacm.poweroj.user.entity.SignupParam;
 import com.swustacm.poweroj.user.entity.User;
 import com.swustacm.poweroj.user.entity.LoginParam;
 import jodd.util.BCrypt;
@@ -61,5 +62,47 @@ public class UserBiz {
         user.setToken(jwtToken);
         user.setPassword(null);
         return CommonResult.ok(user);
+    }
+
+    public CommonResult signup(SignupParam signupParam) {
+        if(!emailCheck(signupParam.getEmail()))
+            return CommonResult.error("邮箱以存在");
+        if(!nameCheck(signupParam.getName()))
+            return CommonResult.error("用户名已存在");
+        if(!signupParam.getPassword().equals(signupParam.getRePassword()))
+            return CommonResult.error("2次密码不一致");
+
+        int ctime = (int)(System.currentTimeMillis()/1000);
+        User newUser = new User();
+        newUser.setName(signupParam.getName()).setNick(signupParam.getNick()).setEmail(signupParam.getEmail()).setRegEmail(signupParam.getEmail());
+        newUser.setPassword(BCrypt.hashpw(signupParam.getPassword(),BCrypt.gensalt()));
+        newUser.setCtime(ctime).setMtime(ctime);
+        //待加入邮箱测试
+        newUser.setStatus(0);
+        if(userService.save(newUser)){
+            int uid = userService.getUserId(newUser.getName());
+            userService.addRoleById(uid);
+            userService.createUserExt(uid);
+
+        }
+
+
+
+        return null;
+    }
+
+    private boolean nameCheck(String name) {
+        String nick = userService.nameCheck(name);
+        if(nick ==null){
+            return false;
+        }
+        return true;
+    }
+
+    private boolean emailCheck(String email) {
+        String nick = userService.emailCheck(email);
+        if (nick == null)
+            return false;
+        return true;
     }
 }

@@ -11,9 +11,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * <p>
- *  前端控制器
- * </p>
+ *
+ *  Problem
+ *
  *
  * @author 张成云
  * @since 2020-10-09
@@ -26,7 +26,7 @@ public class ProblemController {
 
     /**
      * 题目分页查询
-     * @param problemSearchParam 页码，每页数据数，title，source
+     * @param problemSearchParam 页码，每页数据数，title，source, limit, page
      * @return
      */
     @PostMapping("/index")
