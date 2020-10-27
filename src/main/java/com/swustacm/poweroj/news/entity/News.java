@@ -43,6 +43,4 @@ public class News implements Serializable {
 
     @TableField("view")
     private Integer view;
-
-
 }
