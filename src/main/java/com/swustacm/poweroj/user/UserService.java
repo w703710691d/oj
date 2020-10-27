@@ -25,4 +25,14 @@ public interface UserService extends IService<User> {
     boolean hasRole(String admin);
 
     boolean hasRole(List<String> strings, LogicalEnum s);
+
+    String emailCheck(String email);
+
+    String nameCheck(String name);
+
+    int getUserId(String name);
+
+    void addRoleById(int uid);
+
+    void createUserExt(int uid);
 }

@@ -82,5 +82,31 @@ public  class UserServiceImpl extends ServiceImpl<UserMapper, User> implements U
         return false;
     }
 
+    @Override
+    public String nameCheck(String name) {
+        return userMapper.nameCheck(name);
+    }
+
+    @Override
+    public int getUserId(String name) {
+        return userMapper.getUserId(name);
+    }
+
+    @Override
+    public void addRoleById(int uid) {
+        userMapper.addUserMapper(uid);
+    }
+
+    @Override
+    public void createUserExt(int uid) {
+        userMapper.createUserExt(uid);
+    }
+
+    @Override
+    public String emailCheck(String email) {
+
+        return userMapper.emailCheck(email);
+    }
+
 
 }

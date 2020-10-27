@@ -3,6 +3,7 @@ package com.swustacm.poweroj.solution;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.swustacm.poweroj.common.CommonResult;
+
 import com.swustacm.poweroj.common.GlobalConstant;
 import com.swustacm.poweroj.conest.ConestVar;
 import com.swustacm.poweroj.solution.entity.CodeInfo;
@@ -14,9 +15,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * <p>
- * 前端控制器
- * </p>
+ *
+ * solution
+ *
  *
  * @author lizhihao
  * @since 2020-10-11

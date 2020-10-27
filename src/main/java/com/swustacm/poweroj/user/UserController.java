@@ -1,6 +1,7 @@
 package com.swustacm.poweroj.user;
 
 import com.swustacm.poweroj.common.CommonResult;
+import com.swustacm.poweroj.user.entity.SignupParam;
 import com.swustacm.poweroj.user.entity.User;
 import com.swustacm.poweroj.user.entity.LoginParam;
 import lombok.extern.slf4j.Slf4j;
@@ -43,5 +44,17 @@ public class UserController {
     @GetMapping("/getUserInfo")
     public CommonResult<Object> getUserInfo() {
         return CommonResult.ok(SecurityUtils.getSubject().getPrincipal());
+    }
+
+
+    /**
+     * 用户注册
+     * @param signupParam
+     * @return
+     */
+
+    @PostMapping("/signup")
+    public CommonResult signup(@RequestBody @Validated SignupParam signupParam){
+        return userBiz.signup(signupParam);
     }
 }

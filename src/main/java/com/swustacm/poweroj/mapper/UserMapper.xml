@@ -40,6 +40,18 @@
         <result column="data" property="data" />
         <result column="token" property="token" />
     </resultMap>
+    <insert id="addUserMapper">
+        insert into user_role
+        (rid,uid)
+        select id,#{uid} From role as r
+        r.name = 'user'
+
+
+    </insert>
+    <insert id="createUserExt">
+        insert into user_ext
+        (uid) values (#{uid})
+    </insert>
     <select id="getUserRole" resultType="com.swustacm.poweroj.user.entity.Role">
         SELECT
         r.name as name ,
@@ -53,6 +65,25 @@
         FROM permission p inner JOIN role_permission rp ON rp.pid = p.id
         WHERE
         rp.rid = #{id}
+    </select>
+    <select id="emailCheck" resultType="java.lang.String">
+        SELECT  nick
+        FROM user
+        where
+        email = #{email} limit 1
+
+
+    </select>
+    <select id="nameCheck" resultType="java.lang.String">
+         SELECT  nick
+        FROM user
+        where
+        name = #{name} limit 1
+    </select>
+    <select id="getUserId" resultType="java.lang.Integer">
+        SELECT uid
+        FROM user
+        name = #{name}
     </select>
 
 </mapper>
