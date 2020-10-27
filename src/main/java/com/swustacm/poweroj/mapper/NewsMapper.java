@@ -18,8 +18,17 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface NewsMapper extends BaseMapper<News> {
 
+    /**
+     * 新闻分页查询
+     * @param param
+     * @return
+     */
     IPage<News> getNewsPage(IPage<News> param);
 
+    /**
+     * 查询单条新闻
+     * @param id
+     * @return
+     */
     News getNews(@Param("id") Integer id);
-
 }

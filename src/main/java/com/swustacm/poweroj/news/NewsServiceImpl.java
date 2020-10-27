@@ -4,10 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.swustacm.poweroj.news.entity.News;
 import com.swustacm.poweroj.mapper.NewsMapper;
-import com.swustacm.poweroj.news.NewsService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.swustacm.poweroj.params.PageParam;
-import com.swustacm.poweroj.solution.entity.Solution;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +20,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements NewsService {
 
+    @Autowired
     NewsMapper newsMapper;
+
+    @Autowired
+    NewsService newsService;
 
     @Override
     public IPage<News> getNewsPage(PageParam param) {
@@ -32,6 +34,11 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements Ne
 
     @Override
     public News getNews(Integer id) {
+        News news = newsService.getById(id);
+        news.setView(news.getView()+1);
+        newsService.updateById(news);
         return newsMapper.getNews(id);
     }
+
+
 }

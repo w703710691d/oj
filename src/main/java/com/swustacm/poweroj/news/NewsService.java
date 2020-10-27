@@ -27,4 +27,5 @@ public interface NewsService extends IService<News> {
      * @return
      */
     News getNews(Integer id);
+
 }
