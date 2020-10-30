@@ -61,6 +61,7 @@ public  class UserServiceImpl extends ServiceImpl<UserMapper, User> implements U
         }
         return false;
     }
+    @Override
     public boolean hasRole(List<String> strings, LogicalEnum str){
         Subject subject = SecurityUtils.getSubject();
         boolean[] list = subject.hasRoles(strings);
@@ -94,12 +95,18 @@ public  class UserServiceImpl extends ServiceImpl<UserMapper, User> implements U
 
     @Override
     public void addRoleById(int uid) {
-        userMapper.addUserMapper(uid);
+        userMapper.addRoleById(uid);
     }
 
     @Override
     public void createUserExt(int uid) {
         userMapper.createUserExt(uid);
+    }
+
+    @Override
+    public User getUserByName(String name) {
+        return userMapper.getUserByName(name);
+
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.swustacm.poweroj.problem;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.swustacm.poweroj.common.CommonResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.swustacm.poweroj.conest.ConestVar;
@@ -44,20 +45,18 @@ public class ProblemBiz {
         return CommonResult.ok(map);
     }
 
-    public CommonResult searchAll(ProblemSearchParam param) {
+    public CommonResult<IPage<Problem>> searchAll(ProblemSearchParam param) {
         Integer status = null;
         if (!userService.hasRole(Arrays.asList("admin", "teacher"), LogicalEnum.AND)) {
                  status = 1;
         }
         Page<Problem> problemPage = problemService.searchProblem(param,status);
-        Map<String,Object> map = new HashMap<>();
-        map.put("total",problemPage.getTotal());
-        map.put("current",problemPage.getCurrent());
-        map.put("queryList",problemPage.getRecords());
-        return CommonResult.ok(map);
+
+
+        return CommonResult.ok(problemPage);
     }
 
-    public CommonResult showProblem(Integer pid) {
+    public CommonResult<Map<String,Object>> showProblem(Integer pid) {
         Problem  problem = problemService.getProblemForShow(pid);
         if (problem == null){
             return CommonResult.error();

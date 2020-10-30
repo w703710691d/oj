@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotNull;
 
 /**
  * 用户登录操作类
@@ -56,5 +56,13 @@ public class UserController {
     @PostMapping("/signup")
     public CommonResult signup(@RequestBody @Validated SignupParam signupParam){
         return userBiz.signup(signupParam);
+    }
+    /**
+     * email验证链接
+     *
+     */
+    @GetMapping("/email/verify")
+    public CommonResult emailVerify(@RequestParam @NotNull String name, @RequestParam @NotNull String token){
+        return userBiz.emailVerify(name,token);
     }
 }

@@ -1,14 +1,18 @@
 package com.swustacm.poweroj.problem;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.swustacm.poweroj.common.CommonResult;
 import com.swustacm.poweroj.params.PageParam;
+import com.swustacm.poweroj.problem.entity.Problem;
 import com.swustacm.poweroj.problem.entity.ProblemSearchParam;
 import org.apache.commons.collections4.Get;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  *
@@ -30,7 +34,7 @@ public class ProblemController {
      * @return
      */
     @PostMapping("/index")
-    public CommonResult index(@RequestBody @Validated ProblemSearchParam problemSearchParam){
+    public CommonResult<IPage<Problem>> index(@RequestBody @Validated ProblemSearchParam problemSearchParam){
         return problem.searchAll(problemSearchParam);
     }
 
@@ -40,7 +44,7 @@ public class ProblemController {
      * @return
      */
     @GetMapping("/show")
-    public CommonResult show(@RequestParam Integer pid){
+    public CommonResult<Map<String,Object>> show(@RequestParam Integer pid){
         return problem.showProblem(pid);
     }
 

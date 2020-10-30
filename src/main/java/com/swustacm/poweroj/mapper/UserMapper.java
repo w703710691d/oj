@@ -28,7 +28,9 @@ public interface UserMapper extends BaseMapper<User> {
 
     int getUserId(String name);
 
-    void addUserMapper(int uid);
+    void addRoleById(int uid);
 
     void createUserExt(int uid);
+
+    User getUserByName(String name);
 }

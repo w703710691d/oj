@@ -6,6 +6,11 @@ import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
+import com.power.doc.builder.PostmanJsonBuilder;
+import com.power.doc.builder.YapiJsonBuilder;
+import com.power.doc.model.ApiConfig;
+import com.power.doc.model.SourceCodePath;
+import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  * @author lixiaobo
@@ -15,6 +20,10 @@ import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
  */
 public class Genarator {
     public static void main(String[] args) {
+        generatorDoc();
+    }
+
+    public static void generatorTemple(){
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
 
@@ -89,5 +98,38 @@ public class Genarator {
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new VelocityTemplateEngine());
         mpg.execute();
+    }
+
+    public static void generatorDoc(){
+        ApiConfig config = new ApiConfig();
+        config.setServerUrl("http://localhost:8080");
+
+        //设置为严格模式，Smart-doc将降至要求每个Controller暴露的接口写上标准文档注释
+        config.setStrict(false);
+
+        //当把AllInOne设置为true时，Smart-doc将会把所有接口生成到一个Markdown、HHTML或者AsciiDoc中
+        config.setAllInOne(true);
+
+        //Set the api document output path.
+        config.setOutPath("d:\\md2");
+
+        // 设置接口包扫描路径过滤，如果不配置则Smart-doc默认扫描所有的接口类
+        // 配置多个报名有英文逗号隔开
+
+
+        //since 1.7.9 新增是否显示接口作者 默认true
+        config.setShowAuthor(false);
+        //设置公共请求头.如果不需要请求头，则无需设置
+
+
+
+        //不指定SourcePaths默认加载代码为项目src/main/java下的,如果项目的某一些实体来自外部代码可以一起加载
+        config.setSourceCodePaths(
+                //自1.7.0版本开始，在此处可以不设置本地代码路径，单独添加外部代码路径即可
+                // SourceCodePath.path().setDesc("本项目代码").setPath("src/main/java"),
+               // SourceCodePath.builder().setDesc("加载项目外代码").setPath("E:\\ApplicationPower\\ApplicationPower\\Common-util\\src\\main\\java")
+        );
+
+        PostmanJsonBuilder.buildPostmanCollection(config);
     }
 }
