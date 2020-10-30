@@ -3,6 +3,7 @@ package com.swustacm.poweroj.user;
 
 import com.swustacm.poweroj.mapper.UserMapper;
 import com.swustacm.poweroj.user.entity.LogicalEnum;
+import com.swustacm.poweroj.user.entity.Permission;
 import com.swustacm.poweroj.user.entity.User;
 import com.swustacm.poweroj.user.entity.Role;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -107,6 +108,11 @@ public  class UserServiceImpl extends ServiceImpl<UserMapper, User> implements U
     public User getUserByName(String name) {
         return userMapper.getUserByName(name);
 
+    }
+
+    @Override
+    public List<Permission> getRolePermission(int id) {
+        return userMapper.getRolePermission(id);
     }
 
     @Override

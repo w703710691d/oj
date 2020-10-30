@@ -91,5 +91,11 @@
         where
         name = #{name}
     </select>
+    <select id="getRolePermission" resultType="com.swustacm.poweroj.user.entity.Permission">
+       select p.id,p.module,p.type,p.name,p.title,p.parentID,p.status
+        from permission as p left join role_permission as r on p.id = r.pid
+        where r.rid =  #{id}
+
+    </select>
 
 </mapper>

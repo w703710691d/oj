@@ -1,6 +1,7 @@
 package com.swustacm.poweroj.user;
 
 import com.swustacm.poweroj.user.entity.LogicalEnum;
+import com.swustacm.poweroj.user.entity.Permission;
 import com.swustacm.poweroj.user.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.swustacm.poweroj.user.entity.Role;
@@ -37,4 +38,6 @@ public interface UserService extends IService<User> {
     void createUserExt(int uid);
 
     User getUserByName(String name);
+
+    List<Permission> getRolePermission(int id);
 }

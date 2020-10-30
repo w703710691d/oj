@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
  */
 public class Genarator {
     public static void main(String[] args) {
-        generatorDoc();
+        generatorTemple();
     }
 
     public static void generatorTemple(){

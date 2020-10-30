@@ -1,5 +1,6 @@
 package com.swustacm.poweroj.mapper;
 
+import com.swustacm.poweroj.user.entity.Permission;
 import com.swustacm.poweroj.user.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.swustacm.poweroj.user.entity.Role;
@@ -33,4 +34,6 @@ public interface UserMapper extends BaseMapper<User> {
     void createUserExt(int uid);
 
     User getUserByName(String name);
+
+    List<Permission> getRolePermission(int id);
 }

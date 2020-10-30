@@ -10,9 +10,7 @@ import com.swustacm.poweroj.common.email.MailService;
 import com.swustacm.poweroj.common.util.CollectionUtils;
 import com.swustacm.poweroj.common.util.IPUtils;
 import com.swustacm.poweroj.config.shiro.JwtUtil;
-import com.swustacm.poweroj.user.entity.SignupParam;
-import com.swustacm.poweroj.user.entity.User;
-import com.swustacm.poweroj.user.entity.LoginParam;
+import com.swustacm.poweroj.user.entity.*;
 import jodd.util.BCrypt;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.subject.Subject;
@@ -24,6 +22,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Security;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -143,5 +142,19 @@ public class UserBiz {
 
 
         return null;
+    }
+
+    public CommonResult<UserInfo> getUserInfo() {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUser(jwtUtil.getUserInfo());
+
+        List<Role> roleList = userService.getUserRole(userInfo.getUser().getUid());
+        userInfo.setListRole(roleList);
+        for(Role role :roleList){
+            List<Permission> listPer = userService.getRolePermission(role.getId());
+            userInfo.setListPer(listPer);
+        }
+        return CommonResult.ok(userInfo);
+
     }
 }

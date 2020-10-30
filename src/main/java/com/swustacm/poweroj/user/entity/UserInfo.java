@@ -1,26 +1,21 @@
 package com.swustacm.poweroj.user.entity;
 
-
 import lombok.Data;
 
 import java.util.List;
-
 @Data
-public class Role {
-    /**
-    角色id
-     */
-    private int id;
-    /**
-     * 角色名称
-     */
-    private String name;
+public class UserInfo {
+
     /*
-    权限
+    角色列表
+     */
+    private List<Role> listRole;
+    /*
+    权限列表
      */
     private List<Permission> listPer;
     /*
     用户信息
      */
-    public User user;
+    private User user;
 }

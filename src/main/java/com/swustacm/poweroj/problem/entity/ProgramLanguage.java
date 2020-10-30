@@ -29,10 +29,14 @@ public class ProgramLanguage extends Model<ProgramLanguage> {
 
     private static final long serialVersionUID=1L;
     public static final ProgramLanguage dao = new ProgramLanguage();
-
+    /*
+    程序语言id
+     */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
-
+    /*
+    程序语言名称
+     */
     @TableField("name")
     private String name;
 
