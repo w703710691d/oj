@@ -35,4 +35,6 @@ public interface UserService extends IService<User> {
     void addRoleById(int uid);
 
     void createUserExt(int uid);
+
+    User getUserByName(String name);
 }

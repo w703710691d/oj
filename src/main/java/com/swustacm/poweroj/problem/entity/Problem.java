@@ -24,10 +24,14 @@ import lombok.experimental.Accessors;
 public class Problem extends Model<Problem> {
 
     private static final long serialVersionUID=1L;
-
+    /*
+        题目id
+     */
     @TableId(value = "pid", type = IdType.AUTO)
     private Integer pid;
-
+    /*
+    用户id
+     */
     @TableField("uid")
     private Integer uid;
 

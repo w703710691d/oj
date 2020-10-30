@@ -6,6 +6,7 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -21,15 +22,15 @@ import java.util.Properties;
  * @description:  邮件发送配置
  * @author 张成云
  */
-
+@Component
 public class EmailConfig {
     @Value("${spring.mail.host}")
-    private String FROM_MAIL_SMTP = "smtp.qq.com";
+    private String FROM_MAIL_SMTP ;
     @Value("${spring.mail.username}")
-    private String FROM_MAIL_NAME = "1829571814@qq.com";
+    private String FROM_MAIL_NAME ;
 
     @Value("${spring.mail.password}")
-    private String FROM_MAIL_PASS = "dtflbimvfnoedaij";
+    private String FROM_MAIL_PASS ;
 
     private Configuration configuration = new Configuration(Configuration.VERSION_2_3_23);
 

@@ -197,6 +197,12 @@
             <scope>compile</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.shalousun</groupId>
+            <artifactId>smart-doc</artifactId>
+            <version>1.9.7</version>
+        </dependency>
+
     </dependencies>
 
     <build>
