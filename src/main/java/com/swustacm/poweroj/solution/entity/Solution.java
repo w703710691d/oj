@@ -23,12 +23,21 @@ public class Solution implements Serializable {
 
     private static final long serialVersionUID=1L;
 
+    /**
+     * 题目提交id
+     */
     @TableId(value = "sid", type = IdType.AUTO)
     private Integer sid;
 
+    /**
+     * 提交者id
+     */
     @TableField("uid")
     private Integer uid;
 
+    /**
+     * 题目的id
+     */
     @TableField("pid")
     private Integer pid;
 
@@ -38,15 +47,27 @@ public class Solution implements Serializable {
     @TableField("num")
     private Integer num;
 
+    /**
+     * 题目代码运行时间
+     */
     @TableField("time")
     private Integer time;
 
+    /**
+     *代码运行时占用内存
+     */
     @TableField("memory")
     private Integer memory;
 
+    /**
+     * 运行结果
+     */
     @TableField("result")
     private Integer result;
 
+    /**
+     * 代码语言
+     */
     @TableField("language")
     private Integer language;
 
@@ -62,12 +83,21 @@ public class Solution implements Serializable {
     @TableField("wrong")
     private String wrong;
 
+    /**
+     * 错误的类型
+     */
     @TableField("error")
     private String error;
 
+    /**
+     * 代码
+     */
     @TableField("source")
     private String source;
 
+    /**
+     * 代码长度
+     */
     @TableField("codeLen")
     private Integer codeLen;
 

@@ -98,6 +98,7 @@ public class JwtRealm extends AuthorizingRealm {
         if (CollectionUtils.exist(environment.getActiveProfiles(), "dev")) {
            jwt = TOKEN_DEV;
         }
+        
         else {
             jwt = (String) token.getPrincipal();
             if (jwt == null) {
