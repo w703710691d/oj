@@ -97,5 +97,49 @@
         where r.rid =  #{id}
 
     </select>
+    <select id="getUserRank" resultType="java.lang.Integer">
+        SELECT rk FROM ( SELECT @rank := @rank + 1 AS rk, uid FROM USER,( SELECT @rank := 0 ) r
+	            ORDER BY
+		            solved DESC,
+		            submission
+	            ) t_rank
+        WHERE
+	        uid = #{uid}
+	        LIMIT 1
+    </select>
+    <select id="getUserProblem" resultType="com.swustacm.poweroj.user.entity.UserProblemInfo$ProblemList">
+        SELECT
+             p.pid,
+             p.title,
+            MIN( result ) AS result
+        FROM
+            solution s
+            INNER JOIN problem p ON p.pid = s.pid
+        WHERE
+            s.uid =  #{param1}
+            <if test="param2 != -1">
+                and result = #{param2}
+            </if>
+            AND s.STATUS = 1
+        GROUP BY
+            s.pid
+
+    </select>
+    <select id="getAttendedContests" resultType="com.swustacm.poweroj.user.entity.Contests">
+        SELECT
+            DISTINCT(c.cid),
+            c.title ,
+            c.type
+        FROM
+            contest_solution s
+            INNER JOIN contest c ON s.cid = c.cid
+        WHERE
+            s.uid = #{uid}
+        ORDER BY
+            c.cid
+    </select>
+    <select id="isUserInContest" resultType="java.lang.Integer">
+        SELECT uid FROM contest_user WHERE uid=#{uid} AND cid=#{cid} LIMIT 1
+    </select>
 
 </mapper>

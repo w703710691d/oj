@@ -8,6 +8,7 @@ import com.swustacm.poweroj.common.GlobalConstant;
 import com.swustacm.poweroj.common.email.MailEnum;
 import com.swustacm.poweroj.common.email.MailService;
 import com.swustacm.poweroj.common.util.CollectionUtils;
+import com.swustacm.poweroj.common.util.DateConvert;
 import com.swustacm.poweroj.common.util.IPUtils;
 import com.swustacm.poweroj.config.shiro.JwtUtil;
 import com.swustacm.poweroj.user.entity.*;
@@ -21,10 +22,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Security;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * 用户相关操作处理
@@ -43,6 +41,7 @@ public class UserBiz {
     MailService mailService;
     @Autowired
     JwtUtil jwtUtil;
+
 
     public CommonResult<User> login(LoginParam loginParam, HttpServletRequest request) {
         log.info("username:{},password:{}", loginParam.getName(), loginParam.getPassword());
@@ -155,6 +154,23 @@ public class UserBiz {
             userInfo.setListPer(listPer);
         }
         return CommonResult.ok(userInfo);
+
+    }
+
+    public CommonResult<UserProblemInfo> getUserProfile() {
+        User user = jwtUtil.getUserInfo();
+        user.setCTimeString(DateConvert.getTimeToString((user.getCtime()*1000L),DateConvert.YEAR_DATE_TIME));
+        user.setLoginTimeString(DateConvert.getTimeToString((user.getLoginTime()*1000L),DateConvert.YEAR_DATE_TIME));
+
+        UserProblemInfo userProblemInfo = new UserProblemInfo();
+        userProblemInfo.setUser(user);
+        userProblemInfo.setRank(userService.getUserRank(user.getUid()));
+
+        userProblemInfo.setSubmittedProblem(userService.getSubmittedProblem(user.getUid()));
+
+        userProblemInfo.setAttendedContests(userService.getAttendedContests(user.getUid()));
+
+        return CommonResult.ok(userProblemInfo);
 
     }
 }

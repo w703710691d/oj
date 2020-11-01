@@ -48,7 +48,7 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
     @Override
     public Page<Problem> searchProblem(ProblemSearchParam param,Integer status) {
     Page<Problem> page = new Page<>(param.getPage(),param.getLimit());
-        return problemMapper.searchAll(page,param.getSource(),param.getTitle(),status);
+        return problemMapper.searchAll(page,param.getSource(),param.getTitle(),status,param.getPid());
     }
 
     @Override

@@ -77,7 +77,7 @@ public class  ShiroConfig {
         filterRuleMap.put("/captcha/get", "anon");
         filterRuleMap.put("/dev/user/login", "anon");
         filterRuleMap.put("/dev/user/signup","anon");
-        filterRuleMap.put("/dev/user/email/verify","anon");
+        filterRuleMap.put("/dev/user/email/verify/**","anon");
         filterRuleMap.put("/**",  "jwt");
         shiroFilter.setFilterChainDefinitionMap(filterRuleMap);
         return shiroFilter;

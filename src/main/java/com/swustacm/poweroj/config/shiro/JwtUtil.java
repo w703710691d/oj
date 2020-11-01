@@ -107,7 +107,7 @@ public class JwtUtil {
      * @return
      */
     public User getUserInfo(){
-        return  userService.getOne(new QueryWrapper<User>().eq("name",getUserName()));
+        return  userService.getOne(new QueryWrapper<User>().eq("name",getUserName())).setPassword(null);
     }
 
     /**
