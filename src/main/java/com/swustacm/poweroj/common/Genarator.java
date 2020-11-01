@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
  */
 public class Genarator {
     public static void main(String[] args) {
-        generatorDoc();
+        generatorTemple();
     }
 
     public static void generatorTemple(){
@@ -88,7 +88,7 @@ public class Genarator {
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         //包含表
-        strategy.setInclude("notice");
+        strategy.setInclude("topic");
         //lombok
         strategy.setEntityLombokModel(true);
         //restController
