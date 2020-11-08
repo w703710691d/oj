@@ -1,6 +1,8 @@
 package com.swustacm.poweroj.user;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.swustacm.poweroj.common.CommonResult;
+import com.swustacm.poweroj.params.PageParam;
 import com.swustacm.poweroj.user.entity.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 /**
  * 用户登录操作类
@@ -64,10 +65,27 @@ public class UserController {
      */
 
     /**
-     * 获得用户信息（解决题数）
+     * 获得用户信息profile（解决题数）
      */
     @GetMapping("/profile")
     public CommonResult<UserProblemInfo> getUserProfile(){
         return userBiz.getUserProfile();
     }
+
+    /**
+     * RankList 排名列表
+     */
+    @PostMapping("/rankList")
+    public CommonResult<IPage<User>> getRankList(@RequestBody @Validated PageParam page){
+        return userBiz.getRankList(page);
+    }
+
+    /**
+     * 登录日志
+     */
+    @PostMapping("/loginlog")
+    public CommonResult<IPage<LoginLog>> getLoginLog(@RequestBody @Validated PageParam page){
+        return userBiz.getLoginLog(page);
+    }
+
 }

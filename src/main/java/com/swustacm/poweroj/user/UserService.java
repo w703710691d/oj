@@ -1,5 +1,7 @@
 package com.swustacm.poweroj.user;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.swustacm.poweroj.params.PageParam;
 import com.swustacm.poweroj.user.entity.*;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -45,4 +47,8 @@ public interface UserService extends IService<User> {
     List<UserProblemInfo.ProblemList> getSubmittedProblem(int uid,int result);
 
     List<Contests> getAttendedContests(int uid);
+
+    Page<User> getRankList(PageParam page, int rankFirst);
+
+    Page<LoginLog> getLoginLog(PageParam page,String userName);
 }

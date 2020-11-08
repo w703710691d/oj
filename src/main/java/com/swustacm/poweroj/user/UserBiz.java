@@ -1,7 +1,8 @@
 package com.swustacm.poweroj.user;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.swustacm.poweroj.captcha.CaptchaBiz;
 import com.swustacm.poweroj.common.CommonResult;
 import com.swustacm.poweroj.common.GlobalConstant;
@@ -11,17 +12,15 @@ import com.swustacm.poweroj.common.util.CollectionUtils;
 import com.swustacm.poweroj.common.util.DateConvert;
 import com.swustacm.poweroj.common.util.IPUtils;
 import com.swustacm.poweroj.config.shiro.JwtUtil;
+import com.swustacm.poweroj.params.PageParam;
 import com.swustacm.poweroj.user.entity.*;
 import jodd.util.BCrypt;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import java.security.Security;
 import java.util.*;
 
 /**
@@ -67,6 +66,7 @@ public class UserBiz {
         }
         String ip = IPUtils.getIpAddr(request);
         user = userService.updateLogin(user,ip);
+        //生成token
         JwtUtil jwtUtil = new JwtUtil();
         Map<String, Object> chaim = new HashMap<>(4);
         chaim.put("username", user.getName());
@@ -172,5 +172,20 @@ public class UserBiz {
 
         return CommonResult.ok(userProblemInfo);
 
+    }
+
+    public CommonResult<IPage<User>> getRankList(PageParam page) {
+        int rankFirst = page.getLimit()*(page.getPage()-1);
+        Page<User> rankList = userService.getRankList(page,rankFirst);
+        return CommonResult.ok(rankList);
+    }
+
+    public CommonResult getLoginLog(PageParam page) {
+        String userName = jwtUtil.getUserName();
+        if(userName.isEmpty()){
+            return CommonResult.error();
+        }
+        Page<LoginLog> pageList = userService.getLoginLog(page,userName);
+        return CommonResult.ok(pageList);
     }
 }

@@ -1,7 +1,6 @@
 package com.swustacm.poweroj.common.util;
 
 
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -100,5 +99,10 @@ public enum DateConvert {
 
         return dataTime.format(DateTimeFormatter.ofPattern(format.value));
     }
-
+    /**
+     * 获取时间戳
+     */
+    public static int getTime(){
+        return (int) (System.currentTimeMillis() / 1000);
+    }
 }

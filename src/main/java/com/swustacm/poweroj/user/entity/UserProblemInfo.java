@@ -47,9 +47,9 @@ public class UserProblemInfo {
      * 参加比竞赛的问题
      */
     private List<Contests> attendedContests;
-    /**
-     * 题目状态
-     */
+//    /**
+//     * 题目状态
+//     */
 //    @Data
 //    public class ContestsList{
 //

@@ -51,6 +51,9 @@
         where
         r.name = 'user'
     </insert>
+    <insert id="saveLoginlog">
+        insert into loginlog (uid,name,ip,ctime) values (#{uid},#{name},#{loginIp},#{loginTime})
+    </insert>
     <select id="getUserRole" resultType="com.swustacm.poweroj.user.entity.Role">
         SELECT
         r.name as name ,
@@ -140,6 +143,22 @@
     </select>
     <select id="isUserInContest" resultType="java.lang.Integer">
         SELECT uid FROM contest_user WHERE uid=#{uid} AND cid=#{cid} LIMIT 1
+    </select>
+    <select id="getRankList" resultType="com.swustacm.poweroj.user.entity.User">
+        Select @rank := @rank+1 as rk,uid,name,nick,realName,solved,submission
+        from user,(select @rank := #{rankFirst})r
+        where status = 1
+        Order by solved DESC,submission,uid
+
+
+    </select>
+    <select id="getLoginlog" resultType="com.swustacm.poweroj.user.entity.LoginLog">
+        Select id,uid,name,ip,FROM_UNIXTIME(ctime, '%Y-%m-%d %H:%i:%s') as time ,success
+        from loginlog
+        where
+        name = #{param2}
+        Order by ctime Desc
+
     </select>
 
 </mapper>

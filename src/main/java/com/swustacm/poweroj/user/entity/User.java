@@ -1,16 +1,11 @@
 package com.swustacm.poweroj.user.entity;
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
-
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
 import javax.validation.constraints.NotEmpty;
 
 /**
@@ -183,7 +178,11 @@ public class User extends Model<User> {
 
     @TableField("token")
     private String token;
-
+    /**
+        用户排名
+     */
+    @TableField(exist = false)
+    private int rk;
 //    private Long data1;
 //    private Date data2;
 //    private LocalDateTime data3;

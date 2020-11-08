@@ -1,5 +1,7 @@
 package com.swustacm.poweroj.mapper;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.swustacm.poweroj.params.PageParam;
 import com.swustacm.poweroj.user.entity.*;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
@@ -43,4 +45,10 @@ public interface UserMapper extends BaseMapper<User> {
     List<Contests> getAttendedContests(int uid);
 
     Integer isUserInContest(@Param(value = "uid") Integer uid, @Param(value = "cid") Integer cid);
+
+    Page<User> getRankList(@Param(value = "page") Page<User> page, @Param(value = "rankFirst") int rankFirst);
+
+    Page<LoginLog> getLoginlog(Page<LoginLog> pages,String userName);
+
+    void saveLoginlog(@Param(value = "uid")int uid, @Param(value = "name")String name,@Param(value = "loginTime") Integer loginTime,@Param(value = "loginIp") String loginIP);
 }

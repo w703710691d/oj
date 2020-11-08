@@ -1,8 +1,11 @@
 package com.swustacm.poweroj.user;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.swustacm.poweroj.common.GlobalConstant;
+import com.swustacm.poweroj.common.util.DateConvert;
 import com.swustacm.poweroj.mapper.UserMapper;
+import com.swustacm.poweroj.params.PageParam;
 import com.swustacm.poweroj.user.entity.*;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.shiro.SecurityUtils;
@@ -30,10 +33,11 @@ public  class UserServiceImpl extends ServiceImpl<UserMapper, User> implements U
 
     @Override
     public User updateLogin(User user,String ip) {
-        user.setLoginTime((int)(System.currentTimeMillis()/1000));
+        user.setLoginTime(DateConvert.getTime());
         if(ip != null)
             user.setLoginIP(ip);
         this.updateById(user);
+        userMapper.saveLoginlog(user.getUid(),user.getName(),user.getLoginTime(),user.getLoginIP());
         user = this.getById(user.getUid());
         return user;
     }
@@ -139,6 +143,20 @@ public  class UserServiceImpl extends ServiceImpl<UserMapper, User> implements U
         list.removeIf(contests -> contests.getType() == 4 && !canAccessTestContest(contests.getCid(), uid));
         return list;
     }
+
+    @Override
+    public Page<User> getRankList(PageParam page, int rankFirst) {
+        Page<User> pages = new Page<>(page.getPage(),page.getLimit());
+        return userMapper.getRankList(pages,rankFirst);
+    }
+
+    @Override
+    public Page<LoginLog> getLoginLog(PageParam page,String userName) {
+
+        Page<LoginLog> pages = new Page<>(page.getPage(),page.getLimit());
+        return userMapper.getLoginlog(pages,userName);
+    }
+
     public boolean canAccessTestContest(Integer cid,Integer uid){
         if(hasRole(GlobalConstant.ADMIN)){
             return true;
