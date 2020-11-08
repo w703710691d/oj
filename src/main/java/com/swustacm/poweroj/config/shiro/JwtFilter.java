@@ -1,8 +1,12 @@
 package com.swustacm.poweroj.config.shiro;
 import com.google.gson.Gson;
 import com.swustacm.poweroj.common.CommonResult;
+import com.swustacm.poweroj.common.util.CollectionUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.web.filter.AccessControlFilter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 
 
 import javax.servlet.ServletRequest;
@@ -13,12 +17,17 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.TreeMap;
 
+import static com.swustacm.poweroj.config.shiro.JwtRealm.TOKEN_DEV;
+
 /**
  * Jwt过滤器
  * @author xingzi
  */
 @Slf4j
+@Component
 public class JwtFilter extends AccessControlFilter {
+    @Autowired
+    Environment environment;
     @Override
     protected boolean isAccessAllowed(ServletRequest servletRequest, ServletResponse servletResponse, Object o) throws Exception {
         return false;
@@ -27,9 +36,15 @@ public class JwtFilter extends AccessControlFilter {
     @Override
     protected boolean onAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        String jwt = request.getHeader("Authorization");
+        String jwt;
+        jwt = request.getHeader("Authorization");
+//        if (CollectionUtils.exist(environment.getActiveProfiles(), "dev")) {
+//            jwt = TOKEN_DEV;
+//        }else {
+//            jwt = request.getHeader("Authorization");
+//        }
         JwtToken jwtToken = new JwtToken(jwt);
-        /*
+        /*+
          * 下面就是固定写法
          **/
         try {

@@ -40,9 +40,4 @@ public interface TopicMapper extends BaseMapper<Topic> {
      */
     List<Topic> getAllCommentByThreadId(@Param("threadId") Integer threadId);
 
-    /**
-     * 获取最新的id
-     * @return
-     */
-    Integer getMaxId();
 }

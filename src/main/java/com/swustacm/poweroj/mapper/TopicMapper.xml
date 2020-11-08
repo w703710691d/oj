@@ -50,8 +50,4 @@
     <select id="getAllCommentByThreadId" resultType="com.swustacm.poweroj.topic.entity.Topic">
         select * from topic where topic.threadId = #{threadId}
     </select>
-    <select id="getMaxId" resultType="java.lang.Integer">
-        select max(id) from topic
-    </select>
-
 </mapper>

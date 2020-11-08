@@ -1,5 +1,6 @@
 package com.swustacm.poweroj.topic;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.swustacm.poweroj.common.CommonResult;
@@ -69,8 +70,10 @@ public class TopicServiceImpl extends ServiceImpl<TopicMapper, Topic> implements
 
     @Override
     public CommonResult<Topic> addComment(Topic topic) {
+        Integer topicByThreadId = topicService.getById(topic.getId()).getThreadId();
         topic.setStatus(true);
-        topic.setUid(jwtUtil.getUserInfo().getUid());
+        topic.setId(null);
+//        topic.setUid(jwtUtil.getUserInfo().getUid());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         try{
             Date date = new Date();
@@ -79,20 +82,16 @@ public class TopicServiceImpl extends ServiceImpl<TopicMapper, Topic> implements
         }catch (ParseException e){
             log.error(e.getLocalizedMessage());
         }
-        Integer maxId = topicMapper.getMaxId();
+        topicService.save(topic);
         if (topic.getThreadId() != 0 && topic.getThreadId() != null){
-            List<Topic> topics = topicMapper.getAllCommentByThreadId(topic.getThreadId());
+            List<Topic> topics = topicMapper.getAllCommentByThreadId(topicByThreadId);
             for(Topic topic1 : topics){
-                    topic1.setThreadId(maxId+1);
+                    topic1.setThreadId(topic.getId());
                     topicService.updateById(topic1);
             }
-        }else{
-            topic.setThreadId(maxId+1);
-            topicService.save(topic);
-            return CommonResult.ok();
         }
-        topic.setThreadId(maxId+1);
-        topicService.save(topic);
+        topic.setThreadId(topic.getId());
+        topicService.updateById(topic);
         return CommonResult.ok();
     }
 }

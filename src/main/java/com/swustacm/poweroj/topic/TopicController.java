@@ -71,7 +71,7 @@ public class TopicController {
     }
 
     /**
-     * 如果是发表topic，则不输入threadId，如果是回复topic，则需要传入需要回复的threadId
+     * 如果是发表topic，则不输入评论topic id，如果是回复topic，则需要传入需要回复的评topic id
      * @param topic
      * @return
      */

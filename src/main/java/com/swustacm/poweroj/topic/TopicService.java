@@ -34,4 +34,5 @@ public interface TopicService extends IService<Topic> {
      * @return
      */
     CommonResult<Topic> addComment(Topic topic);
+
 }
