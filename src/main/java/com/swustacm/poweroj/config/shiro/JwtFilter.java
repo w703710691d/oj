@@ -1,7 +1,7 @@
 package com.swustacm.poweroj.config.shiro;
 import com.google.gson.Gson;
 import com.swustacm.poweroj.common.CommonResult;
-import com.swustacm.poweroj.common.util.CollectionUtils;
+import jodd.util.BCrypt;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +24,7 @@ import static com.swustacm.poweroj.config.shiro.JwtRealm.TOKEN_DEV;
  * @author xingzi
  */
 @Slf4j
+
 @Component
 public class JwtFilter extends AccessControlFilter {
     @Autowired
@@ -71,5 +72,10 @@ public class JwtFilter extends AccessControlFilter {
         String json = new Gson().toJson(CommonResult.error(HttpServletResponse.SC_UNAUTHORIZED, "invalid token"));
         httpResponse.getWriter().write(json);
 
+    }
+
+    public static void main(String[] args) {
+        String str = BCrypt.hashpw("12345",BCrypt.gensalt());
+        System.out.println(str);
     }
 }

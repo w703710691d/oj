@@ -1,18 +1,15 @@
 package com.swustacm.poweroj.user;
 
 import com.swustacm.poweroj.common.CommonResult;
-import com.swustacm.poweroj.user.entity.SignupParam;
-import com.swustacm.poweroj.user.entity.User;
-import com.swustacm.poweroj.user.entity.LoginParam;
+import com.swustacm.poweroj.user.entity.*;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * 用户登录操作类
@@ -40,13 +37,10 @@ public class UserController {
         return userBiz.login(loginParam,request);
     }
 
-    @RequiresRoles(value = {"teacher"})
     @GetMapping("/getUserInfo")
-    public CommonResult<Object> getUserInfo() {
-        return CommonResult.ok(SecurityUtils.getSubject().getPrincipal());
+    public CommonResult<UserInfo> getUserInfo() {
+        return userBiz.getUserInfo();
     }
-
-
     /**
      * 用户注册
      * @param signupParam
@@ -64,5 +58,16 @@ public class UserController {
     @GetMapping("/email/verify")
     public CommonResult emailVerify(@RequestParam @NotNull String name, @RequestParam @NotNull String token){
         return userBiz.emailVerify(name,token);
+    }
+    /*
+     *  找回password
+     */
+
+    /**
+     * 获得用户信息（解决题数）
+     */
+    @GetMapping("/profile")
+    public CommonResult<UserProblemInfo> getUserProfile(){
+        return userBiz.getUserProfile();
     }
 }

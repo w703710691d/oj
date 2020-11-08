@@ -2,12 +2,11 @@ package com.swustacm.poweroj.user.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.sql.Blob;
+
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.Date;
 
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -25,7 +24,7 @@ import javax.validation.constraints.NotEmpty;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class User implements Serializable {
+public class User extends Model<User> {
 
     /**
      * Unique user ID, internal use.
@@ -106,7 +105,11 @@ public class User implements Serializable {
      */
     @TableField("ctime")
     private Integer ctime;
-
+    /**
+     *创建时间
+     */
+    @TableField(exist = false)
+    private String cTimeString;
     /**
      * Timestamp for when user edit its profile.
      */
@@ -118,6 +121,11 @@ public class User implements Serializable {
      */
     @TableField("loginTime")
     private Integer loginTime;
+    /**
+    登录时间
+     */
+    @TableField(exist = false)
+    private String loginTimeString;
 
     @TableField("loginIP")
     private String loginIP;

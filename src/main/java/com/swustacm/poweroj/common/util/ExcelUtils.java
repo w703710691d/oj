@@ -19,7 +19,7 @@ import java.util.List;
  * @author xingzi
  */
 @Slf4j
-public class ExcelUtils<T> {
+public class ExcelUtils {
     public final static String XLS = "xls";
     public final static String XLSX = "xlsx";
 

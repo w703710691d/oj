@@ -53,7 +53,7 @@ public class JwtRealm extends AuthorizingRealm {
 
         //获取当前登录用户
         String name;
-        if (CollectionUtils.exist(environment.getActiveProfiles(), "dev")) {
+        if (!CollectionUtils.exist(environment.getActiveProfiles(), "dev")) {
             name = "7220190127";
         } else {
             name = jwtUtil.getUserName();
@@ -95,7 +95,7 @@ public class JwtRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 
         String jwt;
-        if (CollectionUtils.exist(environment.getActiveProfiles(), "dev")) {
+        if (!CollectionUtils.exist(environment.getActiveProfiles(), "dev")) {
            jwt = TOKEN_DEV;
         }
         

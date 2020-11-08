@@ -34,16 +34,24 @@ public class Problem extends Model<Problem> {
      */
     @TableField("uid")
     private Integer uid;
-
+    /*
+    问题标题
+     */
     @TableField("title")
     private String title;
-
+    /*
+    问题描述
+     */
     @TableField("description")
     private String description;
-
+    /*
+    输入
+     */
     @TableField("input")
     private String input;
-
+    /*
+    输出
+     */
     @TableField("output")
     private String output;
 
@@ -55,16 +63,22 @@ public class Problem extends Model<Problem> {
 
     @TableField("hint")
     private String hint;
-
+    /*
+    来源
+     */
     @TableField("source")
     private String source;
 
     @TableField("sampleProgram")
     private String sampleProgram;
-
+    /*
+    时间限制
+     */
     @TableField("timeLimit")
     private Integer timeLimit;
-
+    /*
+    时间限制
+     */
     @TableField("memoryLimit")
     private Integer memoryLimit;
 
@@ -103,7 +117,9 @@ public class Problem extends Model<Problem> {
 
     @TableField("view")
     private Integer view;
-
+    /*
+    问题状态 ：1 为所有用户可见；0：为管理员权限可见
+     */
     @TableField("status")
     private Boolean status;
 

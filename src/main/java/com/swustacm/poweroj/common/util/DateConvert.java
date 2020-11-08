@@ -1,10 +1,11 @@
 package com.swustacm.poweroj.common.util;
 
-import org.springframework.http.HttpStatus;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -12,6 +13,9 @@ import java.time.format.DateTimeFormatter;
  * @author xingzi
  */
 public enum DateConvert {
+    /*
+
+     */
     AUTUMN_TERM("autumn"),
     SPRING_TERM("spring"),
       //年月日时间
@@ -84,4 +88,17 @@ public enum DateConvert {
         String time = year + "-" + dateConvert.value;
         return coverTimeToLong(time,DateConvert.YEAR_DATE_TIME);
     }
+
+    /**
+     * Time 转 String
+     * @Param time 时间（Integer)
+     * @Param
+     * @author zcy
+     */
+    public static String getTimeToString(Long time,DateConvert format){
+        LocalDateTime dataTime = LocalDateTime.ofEpochSecond(time,0, ZoneOffset.ofHours(8));
+
+        return dataTime.format(DateTimeFormatter.ofPattern(format.value));
+    }
+
 }

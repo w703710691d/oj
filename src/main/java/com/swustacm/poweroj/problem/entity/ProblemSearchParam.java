@@ -11,7 +11,16 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class ProblemSearchParam extends PageParam {
+        /*
+        题目id
+         */
         private String pid;
+        /*
+        题目标题
+         */
         private String title;
+        /*
+        题目分类
+         */
         private String source;
 }

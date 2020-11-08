@@ -1,15 +1,15 @@
 package com.swustacm.poweroj.user;
 
 
+import com.swustacm.poweroj.common.GlobalConstant;
 import com.swustacm.poweroj.mapper.UserMapper;
-import com.swustacm.poweroj.user.entity.LogicalEnum;
-import com.swustacm.poweroj.user.entity.User;
-import com.swustacm.poweroj.user.entity.Role;
+import com.swustacm.poweroj.user.entity.*;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 /**
@@ -108,6 +108,52 @@ public  class UserServiceImpl extends ServiceImpl<UserMapper, User> implements U
         return userMapper.getUserByName(name);
 
     }
+
+    @Override
+    public List<Permission> getRolePermission(int id) {
+        return userMapper.getRolePermission(id);
+    }
+
+    @Override
+    public Integer getUserRank(int uid) {
+
+        return userMapper.getUserRank(uid);
+
+    }
+
+    @Override
+    public List<UserProblemInfo.ProblemList> getSubmittedProblem(int uid,int result) {
+        return userMapper.getUserProblem(uid,result);
+    }
+
+
+
+    @Override
+    public List<UserProblemInfo.ProblemList> getSubmittedProblem(int uid) {
+        return this.getSubmittedProblem(uid,-1);
+    }
+    @Override
+    public List<Contests> getAttendedContests(int uid) {
+
+        List<Contests> list =  userMapper.getAttendedContests(uid);
+        list.removeIf(contests -> contests.getType() == 4 && !canAccessTestContest(contests.getCid(), uid));
+        return list;
+    }
+    public boolean canAccessTestContest(Integer cid,Integer uid){
+        if(hasRole(GlobalConstant.ADMIN)){
+            return true;
+        }
+        Integer id = userMapper.isUserInContest(uid,cid);
+        Boolean flag;
+        if(id == 0 || id == null){
+            flag =false;
+        }
+        else{
+            flag = true;
+        }
+        return uid != null && flag;
+    }
+
 
     @Override
     public String emailCheck(String email) {

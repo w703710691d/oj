@@ -21,7 +21,8 @@ import java.util.List;
 @Component
 public interface ProblemMapper extends BaseMapper<Problem> {
 
-    Page<Problem> searchAll(@Param(value = "page") Page<Problem> page, @Param(value = "source") String source, @Param(value = "title") String title, @Param(value = "status")Integer status);
+    Page<Problem> searchAll(@Param(value = "page") Page<Problem> page, @Param(value = "source") String source, @Param(value = "title") String title,
+                            @Param(value = "status")Integer status,@Param(value = "pid")String pid);
 
     Integer getPrevPid(@Param(value = "pid")Integer pid,@Param(value = "status")Integer status);
 
