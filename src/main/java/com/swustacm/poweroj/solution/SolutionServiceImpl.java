@@ -29,11 +29,6 @@ public class SolutionServiceImpl extends ServiceImpl<SolutionMapper, Solution> i
     }
 
     @Override
-    public Integer findLanguageId(String language) {
-        return solutionMapper.findLanguageId(language);
-    }
-
-    @Override
     public Solution findSolution(Integer sid) {
         return solutionMapper.findSolution(sid);
     }
@@ -41,16 +36,6 @@ public class SolutionServiceImpl extends ServiceImpl<SolutionMapper, Solution> i
     @Override
     public String getProblemTitle(Integer cid, Integer num) {
         return  solutionMapper.getProblemTitle(cid,num);
-    }
-
-    @Override
-    public String getLanguage(Integer key) {
-        return solutionMapper.getLanguage(key);
-    }
-
-    @Override
-    public User findUser(Integer uid) {
-        return solutionMapper.getUser(uid);
     }
 
 }

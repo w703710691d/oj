@@ -107,18 +107,4 @@ public class Solution implements Serializable {
     @TableField("status")
     private Boolean status;
 
-    @TableField(exist = false)
-    private String name;
-
-    @TableField(exist = false)
-    private String nick;
-
-    @TableField(exist = false)
-    private String stime;
-
-    @TableField(exist = false)
-    private String userName;
-
-    @TableField(exist = false)
-    private String problemTitle;
 }

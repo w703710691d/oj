@@ -1,19 +1,19 @@
-package com.swustacm.poweroj.conest;
+package com.swustacm.poweroj.constant;
 
 import com.swustacm.poweroj.problem.entity.ProgramLanguage;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-public class ConestVar {
+
+public class Constant {
     public static Map<Integer, ResultType> resultType;
     public static List<ResultType> judgeResult;
-
     public static List<ProgramLanguage> programLanguages;
     public static Map<Integer, ProgramLanguage> languageType;
     public static Map<Integer, String> languageName;
     public static Map<String, Integer> languageID;
-
 
     public static void initJudgeResult() {
         judgeResult = new ArrayList<>();
@@ -39,6 +39,7 @@ public class ConestVar {
             resultType.put(result.getId(), result);
         }
     }
+
     public static void loadLanguage() {
 
         languageType = new HashMap<>();

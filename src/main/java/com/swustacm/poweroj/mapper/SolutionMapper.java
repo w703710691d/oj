@@ -23,15 +23,9 @@ import javax.swing.*;
 public interface SolutionMapper extends BaseMapper<Solution> {
     Page<Solution> solutionPage(Page<Solution> page, @Param("param")ShowSolutionParam param);
 
-    Integer findLanguageId(@Param("language") String language);
-
     Solution findSolution(@Param("sid") Integer sid);
 
     String getProblemTitle(@Param("cid") Integer cid,@Param("num") Integer num);
-
-    String getLanguage(@Param("key") Integer key);
-
-    User getUser(@Param("uid") Integer uid);
 
     Page<Solution> getSolutionPro(Page<Solution> page1, Integer pid);
 

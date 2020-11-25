@@ -1,6 +1,6 @@
 package com.swustacm.poweroj.solution.entity;
 
-import com.swustacm.poweroj.conest.ResultType;
+import com.swustacm.poweroj.constant.ResultType;
 import lombok.Data;
 
 @Data
@@ -28,5 +28,5 @@ public class CodeInfo {
     /**
      * 代码语言
      */
-    private String submitLanguage;
+    private Integer language;
 }

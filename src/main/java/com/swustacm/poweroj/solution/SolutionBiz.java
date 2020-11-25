@@ -17,9 +17,6 @@ public class SolutionBiz {
     SolutionService solutionService;
 
     public CommonResult<IPage<Solution>> showSolution(ShowSolutionParam param) {
-        if (param.getLanguage() != null) {
-            param.setLanguage(solutionService.findLanguageId(param.getLanguage()).toString());
-        }
         IPage<Solution> solutionPage = solutionService.showSolution(param);
         return CommonResult.ok(solutionPage);
     }

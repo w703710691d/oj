@@ -12,20 +12,20 @@ public class ShowSolutionParam extends PageParam {
     /**
      * result 提交结果
      */
-    private String result;
+    private Integer result;
 
     /**
      * language 代码语言
      */
-    private String language;
+    private Integer language;
 
     /**
      * pid 提交的题目
      */
-    private String pid;
+    private Integer pid;
 
     /**
-     * userName 提交的用户名（只能使用学号查询）
+     * userName 提交的用户名
      */
     private String userName;
 }

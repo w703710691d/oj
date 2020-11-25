@@ -1,10 +1,9 @@
 package com.swustacm.poweroj.problem;
 
 
-import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.swustacm.poweroj.conest.ConestVar;
-import com.swustacm.poweroj.conest.ResultType;
+import com.swustacm.poweroj.constant.Constant;
+import com.swustacm.poweroj.constant.ResultType;
 import com.swustacm.poweroj.config.shiro.JwtUtil;
 import com.swustacm.poweroj.mapper.ProblemMapper;
 import com.swustacm.poweroj.mapper.SolutionMapper;
@@ -19,10 +18,8 @@ import com.swustacm.poweroj.user.entity.LogicalEnum;
 import jodd.util.StringUtil;
 import org.apache.poi.hssf.record.Record;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -143,7 +140,7 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
     public List<ProblemStatus> getProblemStatus(Integer pid) {
         List<ProblemStatus> list = problemMapper.getProblemStatus(pid);
         for(ProblemStatus status : list){
-            ResultType resultType = ConestVar.resultType.get(status.getResult());
+            ResultType resultType = Constant.resultType.get(status.getResult());
             status.setName(resultType.getName());
             status.setLongName(resultType.getLongName());
         }

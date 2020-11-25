@@ -4,7 +4,7 @@ package com.swustacm.poweroj.problem;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.swustacm.poweroj.common.CommonResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.swustacm.poweroj.conest.ConestVar;
+import com.swustacm.poweroj.constant.Constant;
 import com.swustacm.poweroj.params.PageParam;
 import com.swustacm.poweroj.problem.entity.Problem;
 import com.swustacm.poweroj.problem.entity.ProblemSearchParam;
@@ -31,7 +31,7 @@ public class ProblemBiz {
         Problem problem = problemService.getProblem(pid);
         Map<String,Object>  map = new HashMap<>();
 
-        map.put("program_languages", ConestVar.languageName);
+        map.put("program_languages", Constant.languageName);
         map.put("problem",problem);
         map.put("resultList",problemService.getProblemStatus(pid));
 

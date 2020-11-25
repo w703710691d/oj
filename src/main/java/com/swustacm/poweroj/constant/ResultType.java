@@ -1,4 +1,4 @@
-package com.swustacm.poweroj.conest;
+package com.swustacm.poweroj.constant;
 
 import jodd.format.Printf;
 import lombok.Data;

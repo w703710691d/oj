@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.swustacm.poweroj.common.CommonResult;
 
 import com.swustacm.poweroj.common.GlobalConstant;
-import com.swustacm.poweroj.conest.ConestVar;
+import com.swustacm.poweroj.constant.Constant;
 import com.swustacm.poweroj.solution.entity.CodeInfo;
 import com.swustacm.poweroj.solution.entity.ShowSolutionParam;
 import com.swustacm.poweroj.solution.entity.Solution;
@@ -57,16 +57,16 @@ public class SolutionController {
             Integer num = solution.getNum();
             codeInfo.setProblemTitle(solutionService.getProblemTitle(cid, num));
         }
-        codeInfo.setSubmitLanguage(solutionService.getLanguage(solution.getLanguage()));
+        codeInfo.setLanguage(solution.getLanguage());
         codeInfo.setTime((solution.getTime()));
 
         if (userService.hasRole(GlobalConstant.ADMIN) || userService.hasRole(GlobalConstant.TEACHER)) {
             codeInfo.setSource(solution.getSource());
-            codeInfo.setResult(ConestVar.resultType.get(solution.getResult()));
+            codeInfo.setResult(Constant.resultType.get(solution.getResult()));
             return CommonResult.ok(codeInfo);
         } else if (solution.getResult().equals(0)) {
             codeInfo.setSource(solution.getSource());
-            codeInfo.setResult(ConestVar.resultType.get(solution.getResult()));
+            codeInfo.setResult(Constant.resultType.get(solution.getResult()));
             return CommonResult.ok(codeInfo);
         } else {
             return CommonResult.error("没有查看权限");
