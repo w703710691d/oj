@@ -70,6 +70,7 @@ public class UserBiz {
         JwtUtil jwtUtil = new JwtUtil();
         Map<String, Object> chaim = new HashMap<>(4);
         chaim.put("username", user.getName());
+        chaim.put("uid", user.getUid());
         String jwtToken = jwtUtil.encode(user.getName(), GlobalConstant.TOKEN_EXP, chaim);
         user.setToken(jwtToken);
         user.setPassword(null);

@@ -4,6 +4,7 @@ package com.swustacm.poweroj.user;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.swustacm.poweroj.common.GlobalConstant;
 import com.swustacm.poweroj.common.util.DateConvert;
+import com.swustacm.poweroj.config.shiro.ShiroConfig;
 import com.swustacm.poweroj.mapper.UserMapper;
 import com.swustacm.poweroj.params.PageParam;
 import com.swustacm.poweroj.user.entity.*;
@@ -27,9 +28,6 @@ import java.util.List;
 public  class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     @Autowired
     UserMapper userMapper;
-
-
-
 
     @Override
     public User updateLogin(User user,String ip) {
@@ -179,5 +177,8 @@ public  class UserServiceImpl extends ServiceImpl<UserMapper, User> implements U
         return userMapper.emailCheck(email);
     }
 
-
+    @Override
+    public User getCurrentUser() {
+        return (User) SecurityUtils.getSubject().getPrincipal();
+    }
 }

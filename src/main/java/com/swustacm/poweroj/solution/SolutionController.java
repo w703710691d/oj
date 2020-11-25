@@ -48,28 +48,13 @@ public class SolutionController {
      * 查看提交的代码（只有正确的代码能够查看）
      */
     @PostMapping("/code")
-    public CommonResult<CodeInfo> show(@RequestParam Integer sid) {
+    public CommonResult<Solution> show(@RequestParam Integer sid) {
         Solution solution = solutionService.findSolution(sid);
-        CodeInfo codeInfo = new CodeInfo();
-        Integer cid = solution.getCid();
-        System.out.println(cid);
-        if (cid != null && cid > 0) {
-            Integer num = solution.getNum();
-            codeInfo.setProblemTitle(solutionService.getProblemTitle(cid, num));
-        }
-        codeInfo.setLanguage(solution.getLanguage());
-        codeInfo.setTime((solution.getTime()));
-
-        if (userService.hasRole(GlobalConstant.ADMIN) || userService.hasRole(GlobalConstant.TEACHER)) {
-            codeInfo.setSource(solution.getSource());
-            codeInfo.setResult(Constant.resultType.get(solution.getResult()));
-            return CommonResult.ok(codeInfo);
-        } else if (solution.getResult().equals(0)) {
-            codeInfo.setSource(solution.getSource());
-            codeInfo.setResult(Constant.resultType.get(solution.getResult()));
-            return CommonResult.ok(codeInfo);
-        } else {
+        if(!userService.getCurrentUser().getUid().equals(solution.getUid()) &&
+                userService.hasRole(GlobalConstant.ADMIN)) {
             return CommonResult.error("没有查看权限");
+        } else {
+            return CommonResult.ok(solution);
         }
     }
 }

@@ -2,6 +2,7 @@ package com.swustacm.poweroj.config.shiro;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.swustacm.poweroj.common.util.CollectionUtils;
+import com.swustacm.poweroj.mapper.UserMapper;
 import com.swustacm.poweroj.user.entity.User;
 import com.swustacm.poweroj.user.entity.Role;
 import com.swustacm.poweroj.user.UserService;
@@ -95,10 +96,10 @@ public class JwtRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 
         String jwt;
+        User user = null;
         if (!CollectionUtils.exist(environment.getActiveProfiles(), "dev")) {
            jwt = TOKEN_DEV;
         }
-        
         else {
             jwt = (String) token.getPrincipal();
             if (jwt == null) {
@@ -109,13 +110,12 @@ public class JwtRealm extends AuthorizingRealm {
             if (!jwtUtil.isVerify(jwt)) {
                 throw new UnknownAccountException();
             }
-            //判断数据库中username是否存在
-            String username = (String) jwtUtil.decode(jwt).get("username");
-            log.info("在使用token登录" + username);
+            Integer uid = (Integer)jwtUtil.decode(jwt).get("uid");
+            user =  userService.getById(uid);
         }
         log.info("在使用token登录" + jwt);
 
-        return new SimpleAuthenticationInfo(jwt, jwt, "JwtRealm");
+        return new SimpleAuthenticationInfo(user, jwt, "JwtRealm");
     }
     /**
      * 清除所有用户授权信息缓存.

@@ -51,4 +51,6 @@ public interface UserService extends IService<User> {
     Page<User> getRankList(PageParam page, int rankFirst);
 
     Page<LoginLog> getLoginLog(PageParam page,String userName);
+
+    User getCurrentUser();
 }

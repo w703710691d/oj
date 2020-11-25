@@ -25,13 +25,13 @@ public class User extends Model<User> {
      * Unique user ID, internal use.
      */
     @TableId(value = "uid", type = IdType.AUTO)
-    private int uid;
+    private Integer uid;
 
     /**
      * refere team id.
      */
     @TableField("tid")
-    private int tid;
+    private Integer tid;
 
     /**
      * unique user login name.
@@ -182,7 +182,7 @@ public class User extends Model<User> {
         用户排名
      */
     @TableField(exist = false)
-    private int rk;
+    private Integer rk;
 //    private Long data1;
 //    private Date data2;
 //    private LocalDateTime data3;
