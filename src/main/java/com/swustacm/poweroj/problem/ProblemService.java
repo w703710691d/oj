@@ -1,9 +1,9 @@
 package com.swustacm.poweroj.problem;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.swustacm.poweroj.params.PageParam;
-import com.swustacm.poweroj.problem.entity.Problem;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.swustacm.poweroj.common.params.PageParam;
+import com.swustacm.poweroj.problem.entity.Problem;
 import com.swustacm.poweroj.problem.entity.ProblemSearchParam;
 import com.swustacm.poweroj.problem.entity.ProblemStatus;
 import com.swustacm.poweroj.solution.entity.Solution;

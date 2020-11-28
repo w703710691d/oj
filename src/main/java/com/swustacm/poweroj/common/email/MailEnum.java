@@ -1,7 +1,5 @@
 package com.swustacm.poweroj.common.email;
 
-import lombok.Data;
-
 /**
  *
  * @author zcy

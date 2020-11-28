@@ -1,9 +1,9 @@
 package com.swustacm.poweroj.news;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.swustacm.poweroj.news.entity.News;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.swustacm.poweroj.params.PageParam;
+import com.swustacm.poweroj.common.params.PageParam;
+import com.swustacm.poweroj.news.entity.News;
 
 /**
  * <p>

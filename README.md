@@ -1,20 +1,12 @@
-#oj
-PowerOJ is a online judge for ACM/ICPC or OI.
+# PowerOJ 3.0 正在开发中...
 
-Online Judge is a web service which can compile user's source code and run in limition. 
+这个项目是PowerOJ 3.0 的WebServer部分
 
-Judge use predefined data files as stdin and get user's stdout as files, compare with the standard output data to judge the user's solution.
+采用vue框架进行开发
 
-Online Demo: http://www.oj.swust.edu.cn/
-
-<table>
-  <tbody>
-    <tr><td> JAVA Framework  </td> <td> JFinal        </td></tr>
-    <tr><td> Template Engine </td> <td> FreeMarker    </td></tr>
-    <tr><td> JS Framework    </td> <td> jQuery        </td></tr>
-    <tr><td> CSS Framework   </td> <td> Bootstrap 2   </td></tr> 
-    <tr><td> Data Base       </td> <td> MySQL         </td></tr>
-    <tr><td> Web Server      </td> <td> Tomcat        </td></tr> 
-    <tr><td> OS              </td> <td> Linux/Windows </td></tr>
-  </tbody>
-</table>
+## 开发须知
+* 禁止上传和本项目无关的逻辑代码！
+* 禁止上传Demo代码！
+* 禁止上传IDE配置代码！
+* 禁止上传包含敏感信息（如账号，密码，IP地址）等的代码！
+* 每个commit请写清楚修改，切勿题文不对！

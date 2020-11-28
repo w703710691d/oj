@@ -3,8 +3,8 @@ package com.swustacm.poweroj.news;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.swustacm.poweroj.common.CommonResult;
+import com.swustacm.poweroj.common.params.PageParam;
 import com.swustacm.poweroj.news.entity.News;
-import com.swustacm.poweroj.params.PageParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

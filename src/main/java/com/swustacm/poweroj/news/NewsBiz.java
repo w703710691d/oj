@@ -2,8 +2,8 @@ package com.swustacm.poweroj.news;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.swustacm.poweroj.common.CommonResult;
+import com.swustacm.poweroj.common.params.PageParam;
 import com.swustacm.poweroj.news.entity.News;
-import com.swustacm.poweroj.params.PageParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

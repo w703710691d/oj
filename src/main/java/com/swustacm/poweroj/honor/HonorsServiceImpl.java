@@ -1,8 +1,8 @@
 package com.swustacm.poweroj.honor;
 
-import com.swustacm.poweroj.honor.entity.Honors;
-import com.swustacm.poweroj.mapper.HonorsMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.swustacm.poweroj.honor.entity.Honors;
+import com.swustacm.poweroj.notice.mapper.HonorsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

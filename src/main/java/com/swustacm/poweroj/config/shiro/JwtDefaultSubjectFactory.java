@@ -1,6 +1,5 @@
 package com.swustacm.poweroj.config.shiro;
 
-import org.apache.shiro.mgt.SubjectFactory;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.subject.SubjectContext;
 import org.apache.shiro.web.mgt.DefaultWebSubjectFactory;

@@ -1,13 +1,14 @@
 package com.swustacm.poweroj.common.email;
 
 import com.swustacm.poweroj.common.CodeEnum;
-import com.swustacm.poweroj.common.CustomException;
+import com.swustacm.poweroj.common.exception.CustomException;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;

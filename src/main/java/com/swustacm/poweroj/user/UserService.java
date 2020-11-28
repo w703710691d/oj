@@ -1,9 +1,10 @@
 package com.swustacm.poweroj.user;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.swustacm.poweroj.params.PageParam;
-import com.swustacm.poweroj.user.entity.*;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.swustacm.poweroj.common.params.PageParam;
+import com.swustacm.poweroj.contest.entity.Contests;
+import com.swustacm.poweroj.user.entity.*;
 
 import java.util.List;
 

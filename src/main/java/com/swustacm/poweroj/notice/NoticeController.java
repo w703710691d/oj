@@ -3,9 +3,9 @@ package com.swustacm.poweroj.notice;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.swustacm.poweroj.common.CommonResult;
+import com.swustacm.poweroj.common.params.PageParam;
 import com.swustacm.poweroj.config.shiro.JwtUtil;
 import com.swustacm.poweroj.notice.entity.Notice;
-import com.swustacm.poweroj.params.PageParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

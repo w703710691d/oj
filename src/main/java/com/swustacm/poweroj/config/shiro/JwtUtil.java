@@ -3,16 +3,13 @@ package com.swustacm.poweroj.config.shiro;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
-
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.swustacm.poweroj.user.entity.User;
 import com.swustacm.poweroj.user.UserService;
+import com.swustacm.poweroj.user.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.apache.shiro.SecurityUtils;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,7 +24,7 @@ public class JwtUtil {
     @Autowired
     UserService userService;
     //创建默认的秘钥和算法，供无参的构造方法使用
-    private static final String defaultbase64EncodedSecretKey = "badbabe";
+    private static final String defaultbase64EncodedSecretKey = "badbabe"; //TODO 从配置文件加载
     private static final SignatureAlgorithm defaultsignatureAlgorithm = SignatureAlgorithm.HS256;
 
     public JwtUtil() {
@@ -115,10 +112,7 @@ public class JwtUtil {
      * @return
      */
     public String getUserName(){
-        //获取认证token
-        String jwt =  (String) SecurityUtils.getSubject().getPrincipal();
-        return (String) new JwtUtil().decode(jwt).get("username");
+        return userService.getCurrentUser().getName();
     }
-
 
 }

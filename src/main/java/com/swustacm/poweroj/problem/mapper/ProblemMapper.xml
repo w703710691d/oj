@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swustacm.poweroj.problem.mapper.ProblemMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.swustacm.poweroj.problem.entity.Problem">
+        <id column="pid" property="pid"/>
+        <result column="uid" property="uid"/>
+        <result column="title" property="title"/>
+        <result column="description" property="description"/>
+        <result column="input" property="input"/>
+        <result column="output" property="output"/>
+        <result column="sampleInput" property="sampleInput"/>
+        <result column="sampleOutput" property="sampleOutput"/>
+        <result column="hint" property="hint"/>
+        <result column="source" property="source"/>
+        <result column="sampleProgram" property="sampleProgram"/>
+        <result column="timeLimit" property="timeLimit"/>
+        <result column="memoryLimit" property="memoryLimit"/>
+        <result column="atime" property="atime"/>
+        <result column="ctime" property="ctime"/>
+        <result column="mtime" property="mtime"/>
+        <result column="stime" property="stime"/>
+        <result column="accepted" property="accepted"/>
+        <result column="solved" property="solved"/>
+        <result column="submission" property="submission"/>
+        <result column="submitUser" property="submitUser"/>
+        <result column="error" property="error"/>
+        <result column="ratio" property="ratio"/>
+        <result column="difficulty" property="difficulty"/>
+        <result column="view" property="view"/>
+        <result column="status" property="status"/>
+    </resultMap>
+    <select id="searchAll" resultType="com.swustacm.poweroj.problem.entity.Problem">
+        SELECT
+        pid,title,source,accepted,submission,FROM_UNIXTIME(ctime, '%Y-%m-%d %H:%i:%s') as ctime ,status
+        from
+        problem
+        <where>
+            <if test="title != null ">
+                title like CONCAT("%",#{title},"%")
+            </if>
+            <if test="pid != null">
+                and pid like CONCAT("%",#{pid},"%")
+            </if>
+            <if test="source != null ">
+                and source like CONCAT("%",#{source},"%")
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+        ORDER BY pid
+    </select>
+    <select id="getPrevPid" resultType="java.lang.Integer">
+        select pid
+        FROM problem
+        WHERE pid &lt; #{pid}
+        <if test="status != null">
+            and status = #{status}
+        </if>
+        ORDER by pid Desc limit 1
+    </select>
+    <select id="getNextPid" resultType="java.lang.Integer">
+        select pid
+        FROM problem
+        WHERE pid &gt; #{pid}
+        <if test="status != null">
+            and status = #{status}
+        </if>
+        ORDER by pid limit 1
+    </select>
+    <select id="getMaxMInPid" resultType="java.lang.Integer">
+        Select max(pid),min(pid)
+        from
+        problem
+    </select>
+    <select id="getPid" resultType="java.lang.Integer">
+        select pid
+        where pid #{randomPid}
+        <if test="param2 != null">
+            and status = #{param2}
+        </if>
+    </select>
+    <select id="getTags" resultType="org.apache.poi.hssf.record.Record">
+        SELECT t.id,t.tag as name ,u.name as user,u.uid
+        FROM  tag t
+        LEFT JOIN user u on u.uid = t.uid
+        where
+        t.pid = #{pid}
+        and t.status = 1
+    </select>
+    <select id="getUserResult" resultType="java.lang.Integer">
+        SELECT MIN(result) AS result FROM solution WHERE uid=#{param2} AND pid=#{param1} AND status=1 LIMIT 1
+    </select>
+    <select id="getProblemStatus" resultType="com.swustacm.poweroj.problem.entity.ProblemStatus">
+        SELECT result , count(*) as count
+        FROM solution
+        WHERE pid = #{pid} and status = 1
+        GROUP BY result
+    </select>
+</mapper>

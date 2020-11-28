@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swustacm.poweroj.user.mapper.UserRoleMapper">
+    <select id="getRolesByUserId" resultType="com.swustacm.poweroj.user.entity.Role">
+        SELECT
+        r.name as name ,
+        r.id as id
+        FROM role r LEFT JOIN user_role ur ON ur.rid = r.id
+        WHERE ur.uid = #{uid} AND r.status = 1 AND ur.status = 1
+    </select>
+</mapper>

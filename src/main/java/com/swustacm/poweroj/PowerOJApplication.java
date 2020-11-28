@@ -9,7 +9,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 /**
  * @author lixiaobo
  */
-@MapperScan(basePackages = "com.swustacm.poweroj.mapper.**")
+@MapperScan(basePackages = "com.swustacm.poweroj.**.mapper.**")
 @SpringBootApplication
 public class PowerOJApplication extends SpringBootServletInitializer {
     @Override

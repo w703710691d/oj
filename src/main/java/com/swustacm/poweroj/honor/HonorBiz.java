@@ -2,7 +2,6 @@ package com.swustacm.poweroj.honor;
 
 import com.swustacm.poweroj.common.CommonResult;
 import com.swustacm.poweroj.honor.entity.Honors;
-import com.swustacm.poweroj.news.entity.News;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

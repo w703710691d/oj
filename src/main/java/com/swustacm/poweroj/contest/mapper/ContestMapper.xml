@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swustacm.poweroj.contest.mapper.ContestMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.swustacm.poweroj.contest.Contest">
+        <id column="cid" property="cid" />
+        <result column="uid" property="uid" />
+        <result column="title" property="title" />
+        <result column="startTime" property="startTime" />
+        <result column="endTime" property="endTime" />
+        <result column="description" property="description" />
+        <result column="report" property="report" />
+        <result column="type" property="type" />
+        <result column="password" property="password" />
+        <result column="languages" property="languages" />
+        <result column="lockBoard" property="lockBoard" />
+        <result column="atime" property="atime" />
+        <result column="ctime" property="ctime" />
+        <result column="mtime" property="mtime" />
+        <result column="status" property="status" />
+        <result column="lockReport" property="lockReport" />
+        <result column="lockBoardTime" property="lockBoardTime" />
+        <result column="unlockBoardTime" property="unlockBoardTime" />
+    </resultMap>
+    <select id="getExperimentCid" resultType="java.lang.String">
+        select c.cid FROM contest c left join cprogram_info ci on c.cid = ci.cid
+        WHERE startTime between #{startTime}  AND #{endTime} AND ( c.type = 999 ) and ci.type ='experiment'
+    </select>
+
+</mapper>

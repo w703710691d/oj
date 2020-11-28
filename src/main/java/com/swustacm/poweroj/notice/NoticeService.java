@@ -1,7 +1,7 @@
 package com.swustacm.poweroj.notice;
 
-import com.swustacm.poweroj.notice.entity.Notice;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.swustacm.poweroj.notice.entity.Notice;
 
 /**
  * <p>

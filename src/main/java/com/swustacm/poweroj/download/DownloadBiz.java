@@ -2,12 +2,13 @@ package com.swustacm.poweroj.download;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.swustacm.poweroj.common.CommonResult;
+import com.swustacm.poweroj.common.params.PageParam;
 import com.swustacm.poweroj.download.entity.Resource;
-import com.swustacm.poweroj.params.PageParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;

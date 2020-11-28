@@ -1,11 +1,10 @@
 package com.swustacm.poweroj.config.shiro;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.swustacm.poweroj.common.util.CollectionUtils;
-import com.swustacm.poweroj.mapper.UserMapper;
-import com.swustacm.poweroj.user.entity.User;
-import com.swustacm.poweroj.user.entity.Role;
+import com.swustacm.poweroj.user.RolePermissionService;
+import com.swustacm.poweroj.user.UserRoleService;
 import com.swustacm.poweroj.user.UserService;
+import com.swustacm.poweroj.user.entity.Role;
+import com.swustacm.poweroj.user.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -14,7 +13,6 @@ import org.apache.shiro.cache.Cache;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -23,6 +21,7 @@ import java.util.Set;
 
 /**
  * 认证授权
+ *
  * @author xingzi
  */
 @Component
@@ -31,9 +30,11 @@ public class JwtRealm extends AuthorizingRealm {
     @Autowired
     JwtUtil jwtUtil;
     @Autowired
-    Environment environment;
-    @Autowired
     UserService userService;
+    @Autowired
+    UserRoleService userRoleService;
+    @Autowired
+    RolePermissionService rolePermissionService;
 
     public static final String TOKEN_DEV = "12345";
 
@@ -51,72 +52,39 @@ public class JwtRealm extends AuthorizingRealm {
     //授权
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-
         //获取当前登录用户
-        String name;
-        if (!CollectionUtils.exist(environment.getActiveProfiles(), "dev")) {
-            name = "7220190127";
-        } else {
-            name = jwtUtil.getUserName();
+        User user = (User) principals.getPrimaryPrincipal();
+        List<Role> roleList = userRoleService.getRolesByUid(user.getUid());
+        Set<String> rolesStr = new HashSet<>();
+        Set<String> permissionsStr = new HashSet<>();
+
+        for (Role role : roleList) {
+            rolesStr.add(role.getName());
+            permissionsStr.addAll(rolePermissionService.getPermissionsStrByRoleId(role.getId()));
         }
-        User user = userService.getOne(new QueryWrapper<User>().eq("name", name));
 
-        List<Role> roleList = userService.getUserRole(user.getUid());
-        if (roleList != null && roleList.size() > 0) {
-            SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-            Set<String> roles = new HashSet<>();
-            Set<String> pers = new HashSet<>();
-
-            for (Role r : roleList) {
-                roles.add(r.getName());
-                log.info("role: " + r.getName());
-                List<String> perList = userService.getUserPermission(r.getId());
-                for (String s : perList) {
-                    pers.add(s);
-                    log.info("permission: " + s);
-                }
-            }
-            info.setRoles(roles);
-            info.setStringPermissions(pers);
-            return info;
-        }
-        return null;
-//        //根据用户查询对应权限和角色信息
-//        Set<String> permsSet = new HashSet<String>(){{add("get");}};
-//        Set<String> roleSet = new HashSet<String>(){{add("get");add("post");}};
-//        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-//        info.setStringPermissions(permsSet);
-//        info.setRoles(roleSet);
-//        return info;
-
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        info.setRoles(rolesStr);
+        info.setStringPermissions(permissionsStr);
+        return info;
     }
 
     //认证
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-
-        String jwt;
-        User user = null;
-        if (!CollectionUtils.exist(environment.getActiveProfiles(), "dev")) {
-           jwt = TOKEN_DEV;
+        String jwt = (String) token.getPrincipal();
+        if (null == jwt) {
+            throw new NullPointerException("jwtToken 不允许为空");
         }
-        else {
-            jwt = (String) token.getPrincipal();
-            if (jwt == null) {
-                throw new NullPointerException("jwtToken 不允许为空");
-            }
-            //判断
-            JwtUtil jwtUtil = new JwtUtil();
-            if (!jwtUtil.isVerify(jwt)) {
-                throw new UnknownAccountException();
-            }
-            Integer uid = (Integer)jwtUtil.decode(jwt).get("uid");
-            user =  userService.getById(uid);
+        JwtUtil jwtUtil = new JwtUtil();
+        if (!jwtUtil.isVerify(jwt)) {
+            throw new UnknownAccountException();
         }
-        log.info("在使用token登录" + jwt);
-
+        Integer uid = (Integer) jwtUtil.decode(jwt).get("uid");
+        User user = userService.getById(uid);
         return new SimpleAuthenticationInfo(user, jwt, "JwtRealm");
     }
+
     /**
      * 清除所有用户授权信息缓存.
      */

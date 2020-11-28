@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swustacm.poweroj.user.mapper.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.swustacm.poweroj.user.entity.User">
+        <id column="uid" property="uid" />
+        <result column="tid" property="tid" />
+        <result column="name" property="name" />
+        <result column="password" property="password" />
+        <result column="nick" property="nick" />
+        <result column="realName" property="realName" />
+        <result column="regEmail" property="regEmail" />
+        <result column="email" property="email" />
+        <result column="emailVerified" property="emailVerified" />
+        <result column="language" property="language" />
+        <result column="school" property="school" />
+        <result column="solved" property="solved" />
+        <result column="accepted" property="accepted" />
+        <result column="submission" property="submission" />
+        <result column="atime" property="atime" />
+        <result column="ctime" property="ctime" />
+        <result column="mtime" property="mtime" />
+        <result column="loginTime" property="loginTime" />
+        <result column="loginIP" property="loginIP" />
+        <result column="phone" property="phone" />
+        <result column="qq" property="qq" />
+        <result column="blog" property="blog" />
+        <result column="gender" property="gender" />
+        <result column="comeFrom" property="comeFrom" />
+        <result column="online" property="online" />
+        <result column="level" property="level" />
+        <result column="credit" property="credit" />
+        <result column="shareCode" property="shareCode" />
+        <result column="avatar" property="avatar" />
+        <result column="signature" property="signature" />
+        <result column="checkin" property="checkin" />
+        <result column="checkin_times" property="checkinTimes" />
+        <result column="status" property="status" />
+        <result column="data" property="data" />
+        <result column="token" property="token" />
+    </resultMap>
+    <insert id="createUserExt">
+        insert into user_ext
+        (uid) values (#{uid})
+    </insert>
+    <insert id="addRoleById">
+         insert into user_role
+        (rid,uid)
+        select id ,#{uid} From role as r
+        where
+        r.name = 'user'
+    </insert>
+    <insert id="saveLoginlog">
+        insert into loginlog (uid,name,ip,ctime) values (#{uid},#{name},#{loginIp},#{loginTime})
+    </insert>
+    <select id="getUserRole" resultType="com.swustacm.poweroj.user.entity.Role">
+        SELECT
+        r.name as name ,
+        r.id as id
+        FROM role r LEFT JOIN user_role ur ON ur.rid = r.id
+        WHERE ur.uid = #{uid}
+    </select>
+    <select id="getUserPermission" resultType="java.lang.String">
+        SELECT
+        p.name as permission
+        FROM permission p inner JOIN role_permission rp ON rp.pid = p.id
+        WHERE
+        rp.rid = #{id}
+    </select>
+    <select id="emailCheck" resultType="java.lang.String">
+        SELECT  nick
+        FROM user
+        where
+        email = #{email} limit 1
+
+
+    </select>
+    <select id="nameCheck" resultType="java.lang.String">
+         SELECT  nick
+        FROM user
+        where
+        name = #{name} limit 1
+    </select>
+    <select id="getUserId" resultType="java.lang.Integer">
+        SELECT uid
+        FROM user
+        where
+        name = #{name}
+    </select>
+    <select id="getUserByName" resultType="com.swustacm.poweroj.user.entity.User">
+        select *
+        from user
+        where
+        name = #{name}
+    </select>
+    <select id="getRolePermission" resultType="com.swustacm.poweroj.user.entity.Permission">
+       select p.id,p.module,p.type,p.name,p.title,p.parentID,p.status
+        from permission as p left join role_permission as r on p.id = r.pid
+        where r.rid =  #{id}
+
+    </select>
+    <select id="getUserRank" resultType="java.lang.Integer">
+        SELECT rk FROM ( SELECT @rank := @rank + 1 AS rk, uid FROM USER,( SELECT @rank := 0 ) r
+	            ORDER BY
+		            solved DESC,
+		            submission
+	            ) t_rank
+        WHERE
+	        uid = #{uid}
+	        LIMIT 1
+    </select>
+    <select id="getUserProblem" resultType="com.swustacm.poweroj.user.entity.UserProblemInfo$ProblemList">
+        SELECT
+             p.pid,
+             p.title,
+            MIN( result ) AS result
+        FROM
+            solution s
+            INNER JOIN problem p ON p.pid = s.pid
+        WHERE
+            s.uid =  #{param1}
+            <if test="param2 != -1">
+                and result = #{param2}
+            </if>
+            AND s.STATUS = 1
+        GROUP BY
+            s.pid
+
+    </select>
+    <select id="getAttendedContests" resultType="com.swustacm.poweroj.contest.entity.Contests">
+        SELECT
+            DISTINCT(c.cid),
+            c.title ,
+            c.type
+        FROM
+            contest_solution s
+            INNER JOIN contest c ON s.cid = c.cid
+        WHERE
+            s.uid = #{uid}
+        ORDER BY
+            c.cid
+    </select>
+    <select id="isUserInContest" resultType="java.lang.Integer">
+        SELECT uid FROM contest_user WHERE uid=#{uid} AND cid=#{cid} LIMIT 1
+    </select>
+    <select id="getRankList" resultType="com.swustacm.poweroj.user.entity.User">
+        Select @rank := @rank+1 as rk,uid,name,nick,realName,solved,submission
+        from user,(select @rank := #{rankFirst})r
+        where status = 1
+        Order by solved DESC,submission,uid
+
+
+    </select>
+    <select id="getLoginlog" resultType="com.swustacm.poweroj.user.entity.LoginLog">
+        Select id,uid,name,ip,FROM_UNIXTIME(ctime, '%Y-%m-%d %H:%i:%s') as time ,success
+        from loginlog
+        where
+        name = #{param2}
+        Order by ctime Desc
+
+    </select>
+
+</mapper>

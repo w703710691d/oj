@@ -2,13 +2,13 @@ package com.swustacm.poweroj.user;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.swustacm.poweroj.common.GlobalConstant;
-import com.swustacm.poweroj.common.util.DateConvert;
-import com.swustacm.poweroj.config.shiro.ShiroConfig;
-import com.swustacm.poweroj.mapper.UserMapper;
-import com.swustacm.poweroj.params.PageParam;
-import com.swustacm.poweroj.user.entity.*;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.swustacm.poweroj.common.GlobalConstant;
+import com.swustacm.poweroj.common.params.PageParam;
+import com.swustacm.poweroj.common.util.DateConvert;
+import com.swustacm.poweroj.contest.entity.Contests;
+import com.swustacm.poweroj.user.entity.*;
+import com.swustacm.poweroj.user.mapper.UserMapper;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,13 +56,13 @@ public  class UserServiceImpl extends ServiceImpl<UserMapper, User> implements U
         if (subject == null && admin==null)
             return false;
         try{
-
             return subject.hasRole(admin);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
     }
+
     @Override
     public boolean hasRole(List<String> strings, LogicalEnum str){
         Subject subject = SecurityUtils.getSubject();

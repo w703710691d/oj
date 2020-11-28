@@ -11,8 +11,6 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-
-
 import javax.servlet.Filter;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -74,10 +72,7 @@ public class  ShiroConfig {
         shiroFilter.setFilters(filterMap);
         // 拦截器
         Map<String, String> filterRuleMap = new LinkedHashMap<>();
-        filterRuleMap.put("/captcha/get", "anon");
-        filterRuleMap.put("/dev/user/login", "anon");
-        filterRuleMap.put("/dev/user/signup","anon");
-        filterRuleMap.put("/dev/user/email/verify/**","anon");
+        filterRuleMap.put("/api/user/getGuestToken", "anon");
         filterRuleMap.put("/**",  "jwt");
         shiroFilter.setFilterChainDefinitionMap(filterRuleMap);
         return shiroFilter;

@@ -1,6 +1,6 @@
 package com.swustacm.poweroj.solution.entity;
 
-import com.swustacm.poweroj.constant.ResultType;
+import com.swustacm.poweroj.judge.constant.ResultType;
 import lombok.Data;
 
 @Data

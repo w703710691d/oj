@@ -1,6 +1,5 @@
 package com.swustacm.poweroj.common.util;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

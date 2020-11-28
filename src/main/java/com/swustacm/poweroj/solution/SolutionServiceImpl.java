@@ -1,11 +1,10 @@
 package com.swustacm.poweroj.solution;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.swustacm.poweroj.solution.entity.ShowSolutionParam;
 import com.swustacm.poweroj.solution.entity.Solution;
-import com.swustacm.poweroj.mapper.SolutionMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.swustacm.poweroj.user.entity.User;
+import com.swustacm.poweroj.solution.mapper.SolutionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

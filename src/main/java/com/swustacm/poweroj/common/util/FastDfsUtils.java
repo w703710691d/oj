@@ -1,7 +1,7 @@
 package com.swustacm.poweroj.common.util;
 
-import com.swustacm.poweroj.entity.fastdfs.FastDfsInfo;
-import com.swustacm.poweroj.entity.fastdfs.UploadReturnInfo;
+import com.swustacm.poweroj.fastdfs.fastdfs.FastDfsInfo;
+import com.swustacm.poweroj.fastdfs.fastdfs.UploadReturnInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.csource.common.NameValuePair;
 import org.csource.fastdfs.*;

@@ -2,10 +2,10 @@ package com.swustacm.poweroj.download;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.swustacm.poweroj.download.entity.Resource;
-import com.swustacm.poweroj.mapper.ResourceMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.swustacm.poweroj.params.PageParam;
+import com.swustacm.poweroj.common.params.PageParam;
+import com.swustacm.poweroj.download.entity.Resource;
+import com.swustacm.poweroj.download.mapper.ResourceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

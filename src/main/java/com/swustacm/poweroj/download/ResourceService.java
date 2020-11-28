@@ -1,10 +1,9 @@
 package com.swustacm.poweroj.download;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.swustacm.poweroj.download.entity.Resource;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.swustacm.poweroj.params.PageParam;
-import org.springframework.stereotype.Component;
+import com.swustacm.poweroj.common.params.PageParam;
+import com.swustacm.poweroj.download.entity.Resource;
 
 /**
  * <p>

@@ -3,6 +3,7 @@ package com.swustacm.poweroj.config.redis;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
+
 import java.io.*;
 
 /**

@@ -1,6 +1,6 @@
 package com.swustacm.poweroj.problem.entity;
 
-import com.swustacm.poweroj.params.PageParam;
+import com.swustacm.poweroj.common.params.PageParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

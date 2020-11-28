@@ -7,10 +7,7 @@ import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
 import com.power.doc.builder.PostmanJsonBuilder;
-import com.power.doc.builder.YapiJsonBuilder;
 import com.power.doc.model.ApiConfig;
-import com.power.doc.model.SourceCodePath;
-import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  * @author lixiaobo

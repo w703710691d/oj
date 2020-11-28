@@ -1,4 +1,5 @@
 package com.swustacm.poweroj.config.shiro;
+
 import com.google.gson.Gson;
 import com.swustacm.poweroj.common.CommonResult;
 import jodd.util.BCrypt;
@@ -8,16 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.TreeMap;
-
-import static com.swustacm.poweroj.config.shiro.JwtRealm.TOKEN_DEV;
 
 /**
  * Jwt过滤器

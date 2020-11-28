@@ -1,5 +1,6 @@
 package com.swustacm.poweroj.user.entity;
 
+import com.swustacm.poweroj.contest.entity.Contests;
 import lombok.Data;
 
 import java.util.List;

@@ -3,16 +3,15 @@ package com.swustacm.poweroj.user;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.swustacm.poweroj.captcha.CaptchaBiz;
 import com.swustacm.poweroj.common.CommonResult;
 import com.swustacm.poweroj.common.GlobalConstant;
+import com.swustacm.poweroj.common.captcha.CaptchaBiz;
 import com.swustacm.poweroj.common.email.MailEnum;
 import com.swustacm.poweroj.common.email.MailService;
-import com.swustacm.poweroj.common.util.CollectionUtils;
+import com.swustacm.poweroj.common.params.PageParam;
 import com.swustacm.poweroj.common.util.DateConvert;
 import com.swustacm.poweroj.common.util.IPUtils;
 import com.swustacm.poweroj.config.shiro.JwtUtil;
-import com.swustacm.poweroj.params.PageParam;
 import com.swustacm.poweroj.user.entity.*;
 import jodd.util.BCrypt;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +20,10 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * 用户相关操作处理
@@ -46,15 +48,7 @@ public class UserBiz {
         log.info("username:{},password:{}", loginParam.getName(), loginParam.getPassword());
         //验证码校验
         captchaBiz.verify(loginParam.getCode(),loginParam.getVerKey());
-        User user = new User();
-
-        if (CollectionUtils.exist(environment.getActiveProfiles(), "dev")) {
-            user.setPassword("li112411");
-            user.setName("7220190127");
-            System.out.println("dev----");
-        }
-
-        user = userService.getOne(new QueryWrapper<User>().eq("name", loginParam.getName()));
+        User user = userService.getOne(new QueryWrapper<User>().eq("name", loginParam.getName()));
         if (user == null) {
             return CommonResult.error("用户不存在");
         }
@@ -69,7 +63,7 @@ public class UserBiz {
         //生成token
         JwtUtil jwtUtil = new JwtUtil();
         Map<String, Object> chaim = new HashMap<>(4);
-        chaim.put("username", user.getName());
+        chaim.put("name", user.getName());
         chaim.put("uid", user.getUid());
         String jwtToken = jwtUtil.encode(user.getName(), GlobalConstant.TOKEN_EXP, chaim);
         user.setToken(jwtToken);
@@ -188,5 +182,17 @@ public class UserBiz {
         }
         Page<LoginLog> pageList = userService.getLoginLog(page,userName);
         return CommonResult.ok(pageList);
+    }
+
+    public CommonResult<User> getGuestToken() {
+        User user = new User();
+        user.setUid(0);
+        user.setName("Guest");
+        HashMap<String, Object> chaim = new HashMap<>();
+        chaim.put("uid", 0);
+        chaim.put("username", "Guest");
+        String jwtToken = jwtUtil.encode(user.getName(), GlobalConstant.TOKEN_EXP, chaim);
+        user.setToken(jwtToken);
+        return CommonResult.ok(user);
     }
 }

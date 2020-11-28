@@ -1,6 +1,6 @@
 package com.swustacm.poweroj.solution.entity;
 
-import com.swustacm.poweroj.params.PageParam;
+import com.swustacm.poweroj.common.params.PageParam;
 import lombok.Data;
 
 /**

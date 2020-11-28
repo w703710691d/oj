@@ -3,11 +3,9 @@ package com.swustacm.poweroj.problem;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.swustacm.poweroj.common.CommonResult;
-import com.swustacm.poweroj.params.PageParam;
+import com.swustacm.poweroj.common.params.PageParam;
 import com.swustacm.poweroj.problem.entity.Problem;
 import com.swustacm.poweroj.problem.entity.ProblemSearchParam;
-import org.apache.commons.collections4.Get;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +21,7 @@ import java.util.Map;
  * @since 2020-10-09
  */
 @RestController
-@RequestMapping("/dev/problem")
+@RequestMapping("/problem")
 public class ProblemController {
     @Autowired
     ProblemBiz problem;
@@ -37,6 +35,14 @@ public class ProblemController {
     public CommonResult<IPage<Problem>> index(@RequestBody @Validated ProblemSearchParam problemSearchParam){
         return problem.searchAll(problemSearchParam);
     }
+
+    @PostMapping("/getProblemListForShow")
+    public CommonResult<IPage<Problem>> getProblemListForShow(
+            @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
+            @RequestParam(value = "pageSize", required = false) Integer pageSize) {
+        return null;
+    }
+
 
     /**
      * 更具题目id返回题目的内容
