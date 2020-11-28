@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 用户登录操作类
@@ -44,10 +46,16 @@ public class UserController {
     }
 
 
+    @GetMapping("/getUserRolesAndPermissions")
+    public CommonResult<Map<String, Set<String>>> getUserRoles(@RequestParam(value = "uid", required = false) Integer uid) {
+        return userBiz.getUserRoles(uid);
+    }
+
     @GetMapping("/getUserInfo")
     public CommonResult<UserInfo> getUserInfo() {
         return userBiz.getUserInfo();
     }
+
     /**
      * 用户注册
      *

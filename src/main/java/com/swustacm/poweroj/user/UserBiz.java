@@ -15,15 +15,13 @@ import com.swustacm.poweroj.config.shiro.JwtUtil;
 import com.swustacm.poweroj.user.entity.*;
 import jodd.util.BCrypt;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * 用户相关操作处理
@@ -34,6 +32,8 @@ import java.util.UUID;
 public class UserBiz {
     @Autowired
     UserService userService;
+    @Autowired
+    RolePermissionService rolePermissionService;
     @Autowired
     Environment environment;
     @Autowired
@@ -194,5 +194,22 @@ public class UserBiz {
         String jwtToken = jwtUtil.encode(user.getName(), GlobalConstant.TOKEN_EXP, chaim);
         user.setToken(jwtToken);
         return CommonResult.ok(user);
+    }
+
+    public CommonResult<Map<String, Set<String>>> getUserRoles(Integer uid) {
+        if(uid == null || !SecurityUtils.getSubject().isPermitted("permission:view")) {
+            uid = userService.getCurrentUser().getUid();
+        }
+        Map<String, Set<String>> result = new HashMap<>();
+        List<Role> roles = userService.getUserRoles(uid);
+        Set<String> rolesStr = new HashSet<>();
+        Set<String> permissionsStr = new HashSet<>();
+        for(Role role : roles) {
+            rolesStr.add(role.getName());
+            permissionsStr.addAll(rolePermissionService.getPermissionsStrByRoleId(role.getId()));
+        }
+        result.put("roles", rolesStr);
+        result.put("permissions", permissionsStr);
+        return CommonResult.ok(result);
     }
 }
