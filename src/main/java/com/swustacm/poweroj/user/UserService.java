@@ -54,4 +54,6 @@ public interface UserService extends IService<User> {
     Page<LoginLog> getLoginLog(PageParam page,String userName);
 
     User getCurrentUser();
+
+    List<Role> getUserRoles(Integer uid);
 }

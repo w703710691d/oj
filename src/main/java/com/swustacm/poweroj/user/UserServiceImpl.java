@@ -28,7 +28,8 @@ import java.util.List;
 public  class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     @Autowired
     UserMapper userMapper;
-
+    @Autowired
+    UserRoleService userRoleService;
     @Override
     public User updateLogin(User user,String ip) {
         user.setLoginTime(DateConvert.getTime());
@@ -69,16 +70,18 @@ public  class UserServiceImpl extends ServiceImpl<UserMapper, User> implements U
         boolean[] list = subject.hasRoles(strings);
         if(str.equals(LogicalEnum.OR)){
             for (boolean flag: list) {
-                if (flag)
+                if (flag) {
                     return true;
+                }
             }
             return false;
         }
         if (str.equals(LogicalEnum.AND)) {
 
             for (boolean flag : list) {
-                if (!flag)
+                if (!flag) {
                     return false;
+                }
             }
             return true;
         }
@@ -180,5 +183,10 @@ public  class UserServiceImpl extends ServiceImpl<UserMapper, User> implements U
     @Override
     public User getCurrentUser() {
         return (User) SecurityUtils.getSubject().getPrincipal();
+    }
+
+    @Override
+    public List<Role> getUserRoles(Integer uid) {
+        return userRoleService.getRolesByUid(uid);
     }
 }
